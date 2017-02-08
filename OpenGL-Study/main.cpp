@@ -1,15 +1,37 @@
-//
-//  main.cpp
-//  OpenGL-Study
-//
-//  Created by  Siguma Rin on 2017/02/08.
-//  Copyright © 2017年  Siguma Rin. All rights reserved.
-//
-
+#include <GLFW/glfw3.h>
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main(void)
+{
+    if(glfwInit() == GL_FALSE) {
+        std::cerr << "Can't initialize GLFW" << std::endl;
+        return 1;
+    }
+    
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
+    GLFWwindow* const window = glfwCreateWindow(640, 480, "SAMPLE", NULL , NULL);
+    
+    if(window == nullptr) {
+        std::cerr << "Can't create GLFW window." << std::endl;
+        glfwTerminate();
+        return 1;
+    }
+    
+    glfwMakeContextCurrent(window);
+    
+    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+    
+    while(glfwWindowShouldClose(window) == GL_FALSE) {
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        glfwSwapBuffers(window);
+        
+        glfwWaitEvents();
+    }
+    
+    glfwTerminate();
 }
