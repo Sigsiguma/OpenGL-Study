@@ -37,6 +37,8 @@
 		C130C2011E4B21D1001276A8 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		C130C2031E4B2448001276A8 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../../../../usr/local/lib/libglfw3.a; sourceTree = "<group>"; };
 		C130C2051E4B2477001276A8 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = ../../../../usr/local/lib/libGLEW.a; sourceTree = "<group>"; };
+		C140147C1E4C24B80004B5D5 /* point.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = point.vert; sourceTree = "<group>"; };
+		C140147D1E4C25640004B5D5 /* point.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = point.frag; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				C130C1F31E4B2084001276A8 /* main.cpp */,
+				C140147D1E4C25640004B5D5 /* point.frag */,
+				C140147C1E4C24B80004B5D5 /* point.vert */,
 			);
 			path = "OpenGL-Study";
 			sourceTree = "<group>";
@@ -285,6 +289,7 @@
 				C130C1F91E4B2084001276A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
