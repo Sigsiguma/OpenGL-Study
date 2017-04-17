@@ -1,0 +1,3 @@
+/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir
