@@ -8,6 +8,7 @@
 #include "ProgramObjectCreator.h"
 #include "VBO.h"
 #include "Utility.h"
+#include "Torus.h"
 
 int main(void) {
 
@@ -42,7 +43,10 @@ int main(void) {
         return 1;
     }
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearDepth(1.0);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
 
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
     const GLuint program = programCreator.GetProgramObject();
@@ -65,6 +69,17 @@ int main(void) {
             0.0, 0.0, 1.0, 1.0
     };
 
+    std::vector<unsigned short> index = {
+            0, 2, 1,
+            1, 2, 3
+    };
+
+    Torus torus = Torus(32, 32, 1.0, 2.0);
+
+    std::vector<float> torusPosition = torus.vertexPos_;
+    std::vector<float> torusColor = torus.vertexColor_;
+    std::vector<unsigned short> torusIndex = torus.vertexIndex_;
+
 
     std::vector<int> attLocation;
     attLocation.emplace_back(glGetAttribLocation(program, "position"));
@@ -75,15 +90,18 @@ int main(void) {
     attStride.emplace_back(4);
 
     //頂点バッファオブジェクトの作成
-    VBO positionVBO(vertexPosition.size() * sizeof(GLfloat), &vertexPosition[0]);
+    VBO positionVBO(torusPosition.size() * sizeof(float), &torusPosition[0]);
     positionVBO.SetAttrib(attLocation[0], attStride[0]);
 
-    VBO colorVBO(vertexColor.size() * sizeof(GLfloat), &vertexColor[0]);
+    VBO colorVBO(torusColor.size() * sizeof(float), &torusColor[0]);
     colorVBO.SetAttrib(attLocation[1], attStride[1]);
+
+    auto ibo = Util::createIBO(torusIndex.size() * sizeof(unsigned short), &torusIndex[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
     //MVP行列の作成
     glm::mat4 modelMatrix = glm::mat4(1.0f);
-    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 3.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 10.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), static_cast<float>(width) / height, 0.1f,
                                                   100.0f);
     glm::mat4 vp = projectionMatrix * viewMatrix;
@@ -93,36 +111,24 @@ int main(void) {
 
     int count = 0;
 
-    glm::mat4 mMatrix1, mMatrix2, mMatrix3;
-    glm::mat4 mvp1, mvp2, mvp3;
+    glm::mat4 mMatrix1;
+    glm::mat4 mvp1;
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        glClear(GL_COLOR_BUFFER_BIT);
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ++count;
 
         Util::calcFPS(window, 1.0, "Test:");
 
-        float rad = (count % 360) * M_PI / 180;
-        float x = cos(rad);
-        float y = sin(rad);
+        double rad = (count % 360) * M_PI / 180;
+        double x = cos(rad);
+        double y = sin(rad);
 
-        mMatrix1 = glm::translate(modelMatrix, glm::vec3(x, y + 1.0, 0.0));
+        mMatrix1 = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(0.0f, 1.0f, 1.0f));
         mvp1 = vp * mMatrix1;
         glUniformMatrix4fv(uniLocation, 1, GL_FALSE, &mvp1[0][0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-        mMatrix2 = glm::translate(modelMatrix, glm::vec3(1.0, -1.0, 0.0));
-        mMatrix2 = glm::rotate(mMatrix2, rad, glm::vec3(0, 1, 0));
-        mvp2 = vp * mMatrix2;
-        glUniformMatrix4fv(uniLocation, 1, GL_FALSE, &mvp2[0][0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-        mMatrix3 = glm::translate(modelMatrix, glm::vec3(-1.0, -1.0, 0.0));
-        mMatrix3 = glm::scale(mMatrix3, glm::vec3(y + 1.0, y + 1.0, 0));
-        mvp3 = vp * mMatrix3;
-        glUniformMatrix4fv(uniLocation, 1, GL_FALSE, &mvp3[0][0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, torusIndex.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 

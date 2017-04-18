@@ -11,18 +11,17 @@
 
 #include <vector>
 #include <cmath>
-#include "CommonData.h"
 
 class Torus {
 public:
     Torus(unsigned int row, unsigned int column, unsigned int pipeRadius, unsigned int torusRadius);
 
-    std::vector<Color> vertexColor_;
-    std::vector<Vector3> vertexPos_;
-    std::vector<unsigned int> vertexIndex_;
+    std::vector<float> vertexColor_;
+    std::vector<float> vertexPos_;
+    std::vector<unsigned short> vertexIndex_;
     
 private:
-    Color hsva2rgb(int h, double s, double v, double a);
+    std::vector<float> hsva2rgb(int h, float s, float v, float a);
 };
 
 #endif /* Torus_hpp */

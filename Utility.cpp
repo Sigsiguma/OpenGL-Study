@@ -60,3 +60,13 @@ double Util::calcFPS(GLFWwindow *window, double theTimeInterval = 1.0, std::stri
     return fps;
 }
 
+GLuint Util::createIBO(GLsizeiptr size, GLvoid *data) {
+
+    GLuint ibo;
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    return ibo;
+}
