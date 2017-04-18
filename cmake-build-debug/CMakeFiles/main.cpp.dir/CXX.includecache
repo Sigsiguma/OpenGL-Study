@@ -57,6 +57,10 @@ cstdlib
 -
 iostream
 -
+sstream
+-
+string
+-
 ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
 VBO.h
