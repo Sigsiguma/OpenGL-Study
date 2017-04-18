@@ -5,7 +5,6 @@
 #include <glm/gtx/transform.hpp>
 #include <cstdlib>
 #include <iostream>
-#include <sstream>
 #include "ProgramObjectCreator.h"
 #include "VBO.h"
 #include "Utility.h"

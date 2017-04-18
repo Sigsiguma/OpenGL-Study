@@ -25,6 +25,6 @@ file(GLOB SOURCE_FILES
         *.h
         )
 
-add_executable(main.cpp ${SOURCE_FILES} ProgramObjectCreator.h ProgramObjectCreator.cpp VBO.h VBO.cpp Utility.h)
+add_executable(main.cpp ${SOURCE_FILES} ProgramObjectCreator.h ProgramObjectCreator.cpp VBO.h VBO.cpp Utility.h Utility.cpp)
 
 target_link_libraries(main.cpp ${OPENGL_LIBRARIES} glfw3)

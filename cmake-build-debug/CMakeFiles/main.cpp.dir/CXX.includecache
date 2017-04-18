@@ -34,7 +34,19 @@ cmath
 CommonData.h
 /Users/siguma/CLionProjects/OpenGL-Study/CommonData.h
 
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.cpp
+Utility.h
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+sstream
+-
+iostream
+-
+
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+string
+-
+GLFW/glfw3.h
+-
 
 /Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp
 VBO.h
@@ -58,8 +70,6 @@ glm/gtx/transform.hpp
 cstdlib
 -
 iostream
--
-sstream
 -
 ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h

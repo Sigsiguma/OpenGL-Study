@@ -97,6 +97,9 @@
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Torus.h">
 			<Option target="main.cpp"/>
 		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Utility.cpp">
+			<Option target="main.cpp"/>
+		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Utility.h">
 			<Option target="main.cpp"/>
 		</Unit>

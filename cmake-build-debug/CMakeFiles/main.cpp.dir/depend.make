@@ -9,6 +9,10 @@ CMakeFiles/main.cpp.dir/Torus.cpp.o: ../CommonData.h
 CMakeFiles/main.cpp.dir/Torus.cpp.o: ../Torus.cpp
 CMakeFiles/main.cpp.dir/Torus.cpp.o: ../Torus.h
 
+CMakeFiles/main.cpp.dir/Utility.cpp.o: ../Utility.cpp
+CMakeFiles/main.cpp.dir/Utility.cpp.o: ../Utility.h
+CMakeFiles/main.cpp.dir/Utility.cpp.o: /usr/local/include/GLFW/glfw3.h
+
 CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.cpp
 CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.h
 CMakeFiles/main.cpp.dir/VBO.cpp.o: /usr/local/include/GL/glew.h
