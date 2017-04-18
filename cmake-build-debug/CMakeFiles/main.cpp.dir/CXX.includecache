@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/Users/siguma/CLionProjects/OpenGL-Study/CommonData.h
+
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp
 ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
@@ -18,6 +20,26 @@ iostream
 GL/glew.h
 -
 vector
+-
+
+/Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp
+Torus.h
+/Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+
+/Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+vector
+-
+cmath
+-
+CommonData.h
+/Users/siguma/CLionProjects/OpenGL-Study/CommonData.h
+
+/Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp
+VBO.h
+/Users/siguma/CLionProjects/OpenGL-Study/VBO.h
+
+/Users/siguma/CLionProjects/OpenGL-Study/VBO.h
+GL/glew.h
 -
 
 /Users/siguma/CLionProjects/OpenGL-Study/main.cpp
@@ -37,6 +59,8 @@ iostream
 -
 ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
+VBO.h
+/Users/siguma/CLionProjects/OpenGL-Study/VBO.h
 
 /usr/local/include/GL/glew.h
 stddef.h

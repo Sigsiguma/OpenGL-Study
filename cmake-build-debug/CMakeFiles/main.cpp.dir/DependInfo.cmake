@@ -5,6 +5,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o"
+  "/Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/Torus.cpp.o"
+  "/Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/VBO.cpp.o"
   "/Users/siguma/CLionProjects/OpenGL-Study/main.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

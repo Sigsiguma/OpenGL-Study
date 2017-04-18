@@ -5,8 +5,17 @@ CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
  /usr/local/include/GL/glew.h
+CMakeFiles/main.cpp.dir/Torus.cpp.o
+ /Users/siguma/CLionProjects/OpenGL-Study/CommonData.h
+ /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp
+ /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+CMakeFiles/main.cpp.dir/VBO.cpp.o
+ /Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp
+ /Users/siguma/CLionProjects/OpenGL-Study/VBO.h
+ /usr/local/include/GL/glew.h
 CMakeFiles/main.cpp.dir/main.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
+ /Users/siguma/CLionProjects/OpenGL-Study/VBO.h
  /Users/siguma/CLionProjects/OpenGL-Study/main.cpp
  /usr/local/include/GL/glew.h
  /usr/local/include/GLFW/glfw3.h

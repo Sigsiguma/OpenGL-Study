@@ -81,9 +81,57 @@ CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o.provides: CMakeFiles/main.cpp
 CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o.provides.build: CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o
 
 
+CMakeFiles/main.cpp.dir/Torus.cpp.o: CMakeFiles/main.cpp.dir/flags.make
+CMakeFiles/main.cpp.dir/Torus.cpp.o: ../Torus.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.cpp.dir/Torus.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.cpp.dir/Torus.cpp.o -c /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp
+
+CMakeFiles/main.cpp.dir/Torus.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.cpp.dir/Torus.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp > CMakeFiles/main.cpp.dir/Torus.cpp.i
+
+CMakeFiles/main.cpp.dir/Torus.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.cpp.dir/Torus.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp -o CMakeFiles/main.cpp.dir/Torus.cpp.s
+
+CMakeFiles/main.cpp.dir/Torus.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.cpp.dir/Torus.cpp.o.requires
+
+CMakeFiles/main.cpp.dir/Torus.cpp.o.provides: CMakeFiles/main.cpp.dir/Torus.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Torus.cpp.o.provides.build
+.PHONY : CMakeFiles/main.cpp.dir/Torus.cpp.o.provides
+
+CMakeFiles/main.cpp.dir/Torus.cpp.o.provides.build: CMakeFiles/main.cpp.dir/Torus.cpp.o
+
+
+CMakeFiles/main.cpp.dir/VBO.cpp.o: CMakeFiles/main.cpp.dir/flags.make
+CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.cpp.dir/VBO.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.cpp.dir/VBO.cpp.o -c /Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp
+
+CMakeFiles/main.cpp.dir/VBO.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.cpp.dir/VBO.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp > CMakeFiles/main.cpp.dir/VBO.cpp.i
+
+CMakeFiles/main.cpp.dir/VBO.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.cpp.dir/VBO.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp -o CMakeFiles/main.cpp.dir/VBO.cpp.s
+
+CMakeFiles/main.cpp.dir/VBO.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.cpp.dir/VBO.cpp.o.requires
+
+CMakeFiles/main.cpp.dir/VBO.cpp.o.provides: CMakeFiles/main.cpp.dir/VBO.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/VBO.cpp.o.provides.build
+.PHONY : CMakeFiles/main.cpp.dir/VBO.cpp.o.provides
+
+CMakeFiles/main.cpp.dir/VBO.cpp.o.provides.build: CMakeFiles/main.cpp.dir/VBO.cpp.o
+
+
 CMakeFiles/main.cpp.dir/main.cpp.o: CMakeFiles/main.cpp.dir/flags.make
 CMakeFiles/main.cpp.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.cpp.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.cpp.dir/main.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.cpp.dir/main.cpp.o -c /Users/siguma/CLionProjects/OpenGL-Study/main.cpp
 
 CMakeFiles/main.cpp.dir/main.cpp.i: cmake_force
@@ -108,18 +156,22 @@ CMakeFiles/main.cpp.dir/main.cpp.o.provides.build: CMakeFiles/main.cpp.dir/main.
 # Object files for target main.cpp
 main_cpp_OBJECTS = \
 "CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o" \
+"CMakeFiles/main.cpp.dir/Torus.cpp.o" \
+"CMakeFiles/main.cpp.dir/VBO.cpp.o" \
 "CMakeFiles/main.cpp.dir/main.cpp.o"
 
 # External object files for target main.cpp
 main_cpp_EXTERNAL_OBJECTS =
 
 ../bin/main.cpp: CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o
+../bin/main.cpp: CMakeFiles/main.cpp.dir/Torus.cpp.o
+../bin/main.cpp: CMakeFiles/main.cpp.dir/VBO.cpp.o
 ../bin/main.cpp: CMakeFiles/main.cpp.dir/main.cpp.o
 ../bin/main.cpp: CMakeFiles/main.cpp.dir/build.make
 ../bin/main.cpp: /usr/local/lib/libglfw3.a
 ../bin/main.cpp: /usr/local/lib/libGLEW.a
 ../bin/main.cpp: CMakeFiles/main.cpp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../bin/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../bin/main.cpp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.cpp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -128,6 +180,8 @@ CMakeFiles/main.cpp.dir/build: ../bin/main.cpp
 .PHONY : CMakeFiles/main.cpp.dir/build
 
 CMakeFiles/main.cpp.dir/requires: CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o.requires
+CMakeFiles/main.cpp.dir/requires: CMakeFiles/main.cpp.dir/Torus.cpp.o.requires
+CMakeFiles/main.cpp.dir/requires: CMakeFiles/main.cpp.dir/VBO.cpp.o.requires
 CMakeFiles/main.cpp.dir/requires: CMakeFiles/main.cpp.dir/main.cpp.o.requires
 
 .PHONY : CMakeFiles/main.cpp.dir/requires

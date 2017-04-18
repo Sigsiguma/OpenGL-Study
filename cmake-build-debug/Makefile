@@ -150,6 +150,60 @@ ProgramObjectCreator.cpp.s:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.s
 .PHONY : ProgramObjectCreator.cpp.s
 
+Torus.o: Torus.cpp.o
+
+.PHONY : Torus.o
+
+# target to build an object file
+Torus.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Torus.cpp.o
+.PHONY : Torus.cpp.o
+
+Torus.i: Torus.cpp.i
+
+.PHONY : Torus.i
+
+# target to preprocess a source file
+Torus.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Torus.cpp.i
+.PHONY : Torus.cpp.i
+
+Torus.s: Torus.cpp.s
+
+.PHONY : Torus.s
+
+# target to generate assembly for a file
+Torus.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Torus.cpp.s
+.PHONY : Torus.cpp.s
+
+VBO.o: VBO.cpp.o
+
+.PHONY : VBO.o
+
+# target to build an object file
+VBO.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/VBO.cpp.o
+.PHONY : VBO.cpp.o
+
+VBO.i: VBO.cpp.i
+
+.PHONY : VBO.i
+
+# target to preprocess a source file
+VBO.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/VBO.cpp.i
+.PHONY : VBO.cpp.i
+
+VBO.s: VBO.cpp.s
+
+.PHONY : VBO.s
+
+# target to generate assembly for a file
+VBO.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/VBO.cpp.s
+.PHONY : VBO.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -189,6 +243,12 @@ help:
 	@echo "... ProgramObjectCreator.o"
 	@echo "... ProgramObjectCreator.i"
 	@echo "... ProgramObjectCreator.s"
+	@echo "... Torus.o"
+	@echo "... Torus.i"
+	@echo "... Torus.s"
+	@echo "... VBO.o"
+	@echo "... VBO.i"
+	@echo "... VBO.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

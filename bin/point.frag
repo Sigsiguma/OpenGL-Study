@@ -1,6 +1,8 @@
 #version 150 core
+precision mediump float;
 out vec4 fragment;
+in vec4 vColor;
 
 void main() {
-fragment = vec4(1.0, 0.0, 0.0, 1.0);
+    fragment = vColor;
 }

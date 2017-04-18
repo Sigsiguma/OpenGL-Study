@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "ProgramObjectCreator.h"
+#include "VBO.h"
 
 
 int main(void) {
@@ -41,8 +42,7 @@ int main(void) {
         return 1;
     }
 
-    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-    glEnable(GL_CULL_FACE);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
     const GLuint program = programCreator.GetProgramObject();
@@ -59,35 +59,54 @@ int main(void) {
             -1.0f, 0.0f, 0.0f
     };
 
-    //頂点バッファオブジェクトの作成
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertexPosition.size() * sizeof(GLfloat), &vertexPosition[0], GL_STATIC_DRAW);
+    std::vector<GLfloat> vertexColor = {
+            1.0, 0.0, 0.0, 1.0,
+            0.0, 1.0, 0.0, 1.0,
+            0.0, 0.0, 1.0, 1.0
+    };
 
-    auto attLocation = glGetAttribLocation(program, "position");
-    auto attStride = 3;
-    glVertexAttribPointer(attLocation, attStride, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(attLocation);
+
+    std::vector<int> attLocation;
+    attLocation.emplace_back(glGetAttribLocation(program, "position"));
+    attLocation.emplace_back(glGetAttribLocation(program, "color"));
+
+    std::vector<int> attStride;
+    attStride.emplace_back(3);
+    attStride.emplace_back(4);
+
+    //頂点バッファオブジェクトの作成
+    VBO positionVBO(vertexPosition.size() * sizeof(GLfloat), &vertexPosition[0]);
+    positionVBO.SetAttrib(attLocation[0], attStride[0]);
+
+    VBO colorVBO(vertexColor.size() * sizeof(GLfloat), &vertexColor[0]);
+    colorVBO.SetAttrib(attLocation[1], attStride[1]);
 
     //MVP行列の作成
     glm::mat4 modelMatrix = glm::mat4(1.0f);
-    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(1.0, 1.0, 3.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 3.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), static_cast<float>(width) / height, 0.1f,
                                                   100.0f);
-    glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
+    glm::mat4 vp = projectionMatrix * viewMatrix;
+
+    glm::mat4 mMatrix1 = glm::translate(modelMatrix, glm::vec3(1.5, 0.0, 0.0));
+    glm::mat4 mvp1 = vp * mMatrix1;
+
+    glm::mat4 mMatrix2 = glm::translate(modelMatrix, glm::vec3(-1.5, 0.0, 0.0));
+    glm::mat4 mvp2 = vp * mMatrix2;
 
     auto uniLocation = glGetUniformLocation(program, "mvpMatrix");
-    glUniformMatrix4fv(uniLocation, 1, GL_FALSE, &mvp[0][0]);
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         glBindVertexArray(vao);
-        glDrawArrays(GL_LINE_LOOP, 0, 3);
+        glUniformMatrix4fv(uniLocation, 1, GL_FALSE, &mvp1[0][0]);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        glUniformMatrix4fv(uniLocation, 1, GL_FALSE, &mvp2[0][0]);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(window);
-
 
         glfwWaitEvents();
     }

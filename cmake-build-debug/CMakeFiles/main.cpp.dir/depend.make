@@ -5,7 +5,16 @@ CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o: ../ProgramObjectCreator.cpp
 CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o: ../ProgramObjectCreator.h
 CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o: /usr/local/include/GL/glew.h
 
+CMakeFiles/main.cpp.dir/Torus.cpp.o: ../CommonData.h
+CMakeFiles/main.cpp.dir/Torus.cpp.o: ../Torus.cpp
+CMakeFiles/main.cpp.dir/Torus.cpp.o: ../Torus.h
+
+CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.cpp
+CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.h
+CMakeFiles/main.cpp.dir/VBO.cpp.o: /usr/local/include/GL/glew.h
+
 CMakeFiles/main.cpp.dir/main.cpp.o: ../ProgramObjectCreator.h
+CMakeFiles/main.cpp.dir/main.cpp.o: ../VBO.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../main.cpp
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/GL/glew.h
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/GLFW/glfw3.h
