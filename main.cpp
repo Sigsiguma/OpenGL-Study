@@ -76,8 +76,8 @@ int main(void) {
 
     Torus torus = Torus(32, 32, 1.0, 2.0);
 
-    std::vector<float> torusPosition = torus.vertexPos_;
-    std::vector<float> torusColor = torus.vertexColor_;
+    std::vector<Vector3> torusPosition = torus.vertexPos_;
+    std::vector<Color> torusColor = torus.vertexColor_;
     std::vector<unsigned short> torusIndex = torus.vertexIndex_;
 
 
@@ -90,10 +90,10 @@ int main(void) {
     attStride.emplace_back(4);
 
     //頂点バッファオブジェクトの作成
-    VBO positionVBO(torusPosition.size() * sizeof(float), &torusPosition[0]);
+    VBO positionVBO(torusPosition.size() * sizeof(Vector3), &torusPosition[0]);
     positionVBO.SetAttrib(attLocation[0], attStride[0]);
 
-    VBO colorVBO(torusColor.size() * sizeof(float), &torusColor[0]);
+    VBO colorVBO(torusColor.size() * sizeof(Color), &torusColor[0]);
     colorVBO.SetAttrib(attLocation[1], attStride[1]);
 
     auto ibo = Util::createIBO(torusIndex.size() * sizeof(unsigned short), &torusIndex[0]);

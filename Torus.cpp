@@ -18,11 +18,9 @@ Torus::Torus(unsigned int row, unsigned int column, unsigned int pipeRadius, uns
             double tx = (rr * pipeRadius + torusRadius) * cos(tr);
             double ty = ry * pipeRadius;
             double tz = (rr * pipeRadius + torusRadius) * sin(tr);
-            vertexPos_.emplace_back(tx);
-            vertexPos_.emplace_back(ty);
-            vertexPos_.emplace_back(tz);
-            std::vector<float> colors = hsva2rgb(360 / column * ii, 1, 1, 1);
-            vertexColor_.insert(vertexColor_.end(), colors.begin(), colors.end());
+            vertexPos_.emplace_back(tx, ty, tz);
+            Color colors = hsva2rgb(360 / column * ii, 1, 1, 1);
+            vertexColor_.emplace_back(colors);
         }
     }
 
@@ -39,8 +37,8 @@ Torus::Torus(unsigned int row, unsigned int column, unsigned int pipeRadius, uns
     }
 }
 
-std::vector<float> Torus::hsva2rgb(int h, float s, float v, float a) {
-    if (s > 1 || v > 1 || a > 1) { return {1, 1, 1, 1}; }
+Color Torus::hsva2rgb(int h, float s, float v, float a) {
+    if (s > 1 || v > 1 || a > 1) { return Color(1, 1, 1, 1); }
 
     float th = h % 360;
     int i = static_cast<int>(floor(th / 60));
@@ -52,5 +50,5 @@ std::vector<float> Torus::hsva2rgb(int h, float s, float v, float a) {
     std::vector<float> r = {v, n, m, m, k, v};
     std::vector<float> g = {k, v, v, n, m, m};
     std::vector<float> b = {m, m, k, v, v, n};
-    return {r[i], g[i], b[i], a};
+    return Color(r[i], g[i], b[i], a);
 }
