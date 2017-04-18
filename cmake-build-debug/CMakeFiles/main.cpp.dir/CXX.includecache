@@ -34,6 +34,8 @@ cmath
 CommonData.h
 /Users/siguma/CLionProjects/OpenGL-Study/CommonData.h
 
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+
 /Users/siguma/CLionProjects/OpenGL-Study/VBO.cpp
 VBO.h
 /Users/siguma/CLionProjects/OpenGL-Study/VBO.h
@@ -59,12 +61,12 @@ iostream
 -
 sstream
 -
-string
--
 ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
 VBO.h
 /Users/siguma/CLionProjects/OpenGL-Study/VBO.h
+Utility.h
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.h
 
 /usr/local/include/GL/glew.h
 stddef.h
