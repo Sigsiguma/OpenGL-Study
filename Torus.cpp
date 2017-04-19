@@ -18,7 +18,10 @@ Torus::Torus(unsigned int row, unsigned int column, unsigned int pipeRadius, uns
             double tx = (rr * pipeRadius + torusRadius) * cos(tr);
             double ty = ry * pipeRadius;
             double tz = (rr * pipeRadius + torusRadius) * sin(tr);
+            double rx = rr * cos(tr);
+            double rz = rr * sin(tr);
             vertexPos_.emplace_back(tx, ty, tz);
+            normal_.emplace_back(rx, ry, rz);
             Color colors = hsva2rgb(360 / column * ii, 1, 1, 1);
             vertexColor_.emplace_back(colors);
         }
