@@ -101,6 +101,8 @@ int main(void) {
     uniLocation.emplace_back(glGetUniformLocation(program, "mvpMatrix"));
     uniLocation.emplace_back(glGetUniformLocation(program, "invMatrix"));
     uniLocation.emplace_back(glGetUniformLocation(program, "lightDirection"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "ambientColor"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "eyeDirection"));
 
     int count = 0;
 
@@ -109,6 +111,10 @@ int main(void) {
 
     auto lightDirection = glm::vec3(-0.5, 0.5, 0.5);
     glUniform3fv(uniLocation[2], 1, &lightDirection[0]);
+    auto ambientColor = glm::vec4(0.1, 0.1, 0.1, 1.0);
+    glUniform4fv(uniLocation[3], 1, &ambientColor[0]);
+    auto eyeDirection = glm::vec3(0.0, 0.0, 20.0);
+    glUniform3fv(uniLocation[4], 1, &eyeDirection[0]);
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
