@@ -4,18 +4,11 @@ in vec3 position;
 in vec3 normal;
 in vec4 color;
 uniform mat4 mvpMatrix;
-uniform mat4 invMatrix;
-uniform vec3 lightDirection;
-uniform vec4 ambientColor;
-uniform vec3 eyeDirection;
+out vec3 vNormal;
 out vec4 vColor;
 
 void main() {
-    vec3 invLight = normalize(invMatrix * vec4(lightDirection, 0.0)).xyz;
-    vec3 invEye = normalize(invMatrix * vec4(eyeDirection, 0.0)).xyz;
-    vec3 halfLE = normalize(invLight + invEye);
-    float diffuse = clamp(dot(normal, invLight), 0.0, 1.0);
-    float specular = pow(clamp(dot(normal, halfLE), 0.0, 1.0), 50.0);
-    vColor = color * vec4(vec3(diffuse), 1.0) + ambientColor + vec4(vec3(specular), 1.0);
+    vNormal = normal;
+    vColor = color;
     gl_Position = mvpMatrix * vec4(position, 1);
 }
