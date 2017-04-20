@@ -44,6 +44,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/local/lib/cmake/glfw3/glfw3ConfigVersion.cmake"
   "/usr/local/lib/cmake/glfw3/glfw3Targets-release.cmake"
   "/usr/local/lib/cmake/glfw3/glfw3Targets.cmake"
+  "/usr/local/share/OpenCV/OpenCVConfig-version.cmake"
+  "/usr/local/share/OpenCV/OpenCVConfig.cmake"
+  "/usr/local/share/OpenCV/OpenCVModules-release.cmake"
+  "/usr/local/share/OpenCV/OpenCVModules.cmake"
   )
 
 # The corresponding makefile is:

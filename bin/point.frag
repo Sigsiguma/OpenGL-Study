@@ -5,9 +5,11 @@ uniform mat4 invMatrix;
 uniform vec3 lightPosition;
 uniform vec4 ambientColor;
 uniform vec3 eyeDirection;
+uniform sampler2D utexture;
 in vec3 vPosition;
 in vec4 vColor;
 in vec3 vNormal;
+in vec2 vTextureCoord;
 
 void main() {
     vec3 lightVec = lightPosition - vPosition;
@@ -16,5 +18,6 @@ void main() {
     vec3 halfLE = normalize(invLight + invEye);
     float diffuse = clamp(dot(vNormal, invLight), 0.0, 1.0);
     float specular = pow(clamp(dot(vNormal, halfLE), 0.0, 1.0), 50.0);
-    fragment = vColor * vec4(vec3(diffuse), 1.0) + ambientColor + vec4(vec3(specular), 1.0);
+    vec4 smpColor = texture(utexture, vTextureCoord);
+    fragment = vColor * smpColor;
 }

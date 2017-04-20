@@ -11,6 +11,7 @@ set(CMAKE_PREFIX_PATH /usr/local/lib/)
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(OpenCV REQUIRED)
 find_package(GLEW REQUIRED STATIC)
 
 
@@ -28,3 +29,4 @@ file(GLOB SOURCE_FILES
 add_executable(main.cpp ${SOURCE_FILES} ProgramObjectCreator.h ProgramObjectCreator.cpp VBO.h VBO.cpp Utility.h Utility.cpp Sphere.cpp Sphere.h)
 
 target_link_libraries(main.cpp ${OPENGL_LIBRARIES} glfw3)
+target_link_libraries(main.cpp ${OpenCV_LIBS})
