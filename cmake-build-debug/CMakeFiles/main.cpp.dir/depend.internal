@@ -5,9 +5,18 @@ CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
  /usr/local/include/GL/glew.h
+CMakeFiles/main.cpp.dir/Sphere.cpp.o
+ /Users/siguma/CLionProjects/OpenGL-Study/Sphere.cpp
+ /Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
+ /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+ /usr/local/include/GL/glew.h
+ /usr/local/include/GLFW/glfw3.h
 CMakeFiles/main.cpp.dir/Torus.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp
  /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+ /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+ /usr/local/include/GL/glew.h
+ /usr/local/include/GLFW/glfw3.h
 CMakeFiles/main.cpp.dir/Utility.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/Utility.cpp
  /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
@@ -19,6 +28,7 @@ CMakeFiles/main.cpp.dir/VBO.cpp.o
  /usr/local/include/GL/glew.h
 CMakeFiles/main.cpp.dir/main.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
+ /Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
  /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
  /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
  /Users/siguma/CLionProjects/OpenGL-Study/VBO.h

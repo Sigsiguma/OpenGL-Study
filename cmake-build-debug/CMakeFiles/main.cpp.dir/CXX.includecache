@@ -20,15 +20,29 @@ GL/glew.h
 vector
 -
 
+/Users/siguma/CLionProjects/OpenGL-Study/Sphere.cpp
+Sphere.h
+/Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
+cmath
+-
+
+/Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
+Utility.h
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+vector
+-
+
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp
 Torus.h
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+cmath
+-
 
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
 vector
 -
-cmath
--
+Utility.h
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.h
 
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.cpp
 Utility.h
@@ -36,6 +50,10 @@ Utility.h
 sstream
 -
 iostream
+-
+cmath
+-
+vector
 -
 
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
@@ -77,6 +95,8 @@ Utility.h
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
 Torus.h
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+Sphere.h
+/Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
 
 /usr/local/include/GL/glew.h
 stddef.h

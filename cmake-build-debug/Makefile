@@ -150,6 +150,33 @@ ProgramObjectCreator.cpp.s:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.s
 .PHONY : ProgramObjectCreator.cpp.s
 
+Sphere.o: Sphere.cpp.o
+
+.PHONY : Sphere.o
+
+# target to build an object file
+Sphere.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Sphere.cpp.o
+.PHONY : Sphere.cpp.o
+
+Sphere.i: Sphere.cpp.i
+
+.PHONY : Sphere.i
+
+# target to preprocess a source file
+Sphere.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Sphere.cpp.i
+.PHONY : Sphere.cpp.i
+
+Sphere.s: Sphere.cpp.s
+
+.PHONY : Sphere.s
+
+# target to generate assembly for a file
+Sphere.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Sphere.cpp.s
+.PHONY : Sphere.cpp.s
+
 Torus.o: Torus.cpp.o
 
 .PHONY : Torus.o
@@ -270,6 +297,9 @@ help:
 	@echo "... ProgramObjectCreator.o"
 	@echo "... ProgramObjectCreator.i"
 	@echo "... ProgramObjectCreator.s"
+	@echo "... Sphere.o"
+	@echo "... Sphere.i"
+	@echo "... Sphere.s"
 	@echo "... Torus.o"
 	@echo "... Torus.i"
 	@echo "... Torus.s"

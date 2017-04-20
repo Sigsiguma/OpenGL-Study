@@ -82,13 +82,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/CommonData.h">
-			<Option target="main.cpp"/>
-		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp">
 			<Option target="main.cpp"/>
 		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Sphere.cpp">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Sphere.h">
 			<Option target="main.cpp"/>
 		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp">

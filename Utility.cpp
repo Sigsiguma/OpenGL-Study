@@ -5,6 +5,8 @@
 #include "Utility.h"
 #include <sstream>
 #include <iostream>
+#include <cmath>
+#include <vector>
 
 
 double Util::calcFPS(GLFWwindow *window, double theTimeInterval = 1.0, std::string theWindowTitle = "NONE") {
@@ -69,4 +71,20 @@ GLuint Util::createIBO(GLsizeiptr size, GLvoid *data) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     return ibo;
+}
+
+Color Util::hsva2rgb(int h, float s, float v, float a) {
+    if (s > 1 || v > 1 || a > 1) { return Color(1, 1, 1, 1); }
+
+    float th = h % 360;
+    int i = static_cast<int>(floor(th / 60));
+    float f = th / 60 - i;
+    float m = v * (1 - s);
+    float n = v * (1 - s * f);
+    float k = v * (1 - s * (1 - f));
+
+    std::vector<float> r = {v, n, m, m, k, v};
+    std::vector<float> g = {k, v, v, n, m, m};
+    std::vector<float> b = {m, m, k, v, v, n};
+    return Color(r[i], g[i], b[i], a);
 }
