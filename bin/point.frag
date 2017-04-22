@@ -6,6 +6,7 @@ uniform vec3 lightPosition;
 uniform vec4 ambientColor;
 uniform vec3 eyeDirection;
 uniform sampler2D utexture;
+uniform sampler2D utexture2;
 in vec3 vPosition;
 in vec4 vColor;
 in vec3 vNormal;
@@ -19,5 +20,6 @@ void main() {
     float diffuse = clamp(dot(vNormal, invLight), 0.0, 1.0);
     float specular = pow(clamp(dot(vNormal, halfLE), 0.0, 1.0), 50.0);
     vec4 smpColor = texture(utexture, vTextureCoord);
-    fragment = vColor * smpColor;
+    vec4 smpColor2 = texture(utexture2, vTextureCoord);
+    fragment = vColor * smpColor * smpColor2;
 }

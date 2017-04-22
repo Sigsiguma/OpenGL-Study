@@ -88,6 +88,7 @@ int main(void) {
     uniLocation.emplace_back(glGetUniformLocation(program, "ambientColor"));
     uniLocation.emplace_back(glGetUniformLocation(program, "eyeDirection"));
     uniLocation.emplace_back(glGetUniformLocation(program, "utexture"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "utexture2"));
 
     int count = 0;
 
@@ -136,21 +137,28 @@ int main(void) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vIBO);
 
     //テクスチャの表示
-    cv::Mat img = cv::imread("./texture4.png", cv::IMREAD_UNCHANGED);
+    cv::Mat img = cv::imread("./texture0.png", cv::IMREAD_UNCHANGED);
     cv::cvtColor(img, img, cv::COLOR_BGRA2RGBA);
 
-    glActiveTexture(GL_TEXTURE0);
+    cv::Mat img2 = cv::imread("./texture1.png", cv::IMREAD_UNCHANGED);
+    cv::cvtColor(img2, img2, cv::COLOR_BGRA2RGBA);
 
-    GLuint tex;
+
+    GLuint tex, tex2;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.cols, img.rows, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                  img.data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glGenTextures(1, &tex2);
+    glBindTexture(GL_TEXTURE_2D, tex2);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img2.cols, img2.rows, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 img2.data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glUniform1i(uniLocation[6], 0);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -178,6 +186,15 @@ int main(void) {
         glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
         glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &mMatrix[0][0]);
         glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &invMatrix[0][0]);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glUniform1i(uniLocation[6], 0);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, tex2);
+        glUniform1i(uniLocation[7], 1);
+
         glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
