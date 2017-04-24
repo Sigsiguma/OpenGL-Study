@@ -32,6 +32,20 @@ Utility.h
 vector
 -
 
+/Users/siguma/CLionProjects/OpenGL-Study/Texture.cpp
+Texture.h
+/Users/siguma/CLionProjects/OpenGL-Study/Texture.h
+
+/Users/siguma/CLionProjects/OpenGL-Study/Texture.h
+string
+-
+opencv/cv.h
+-
+highgui.h
+-
+GL/glew.h
+-
+
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp
 Torus.h
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
@@ -101,6 +115,8 @@ Torus.h
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
 Sphere.h
 /Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
+Texture.h
+/Users/siguma/CLionProjects/OpenGL-Study/Texture.h
 
 /usr/local/include/GL/glew.h
 stddef.h

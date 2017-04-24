@@ -12,6 +12,7 @@
 #include "Utility.h"
 #include "Torus.h"
 #include "Sphere.h"
+#include "Texture.h"
 
 int main(void) {
 
@@ -137,29 +138,11 @@ int main(void) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vIBO);
 
     //テクスチャの表示
-    cv::Mat img = cv::imread("./texture0.png", cv::IMREAD_UNCHANGED);
-    cv::cvtColor(img, img, cv::COLOR_BGRA2RGBA);
+    Texture texture1("texture0.png");
+    Texture texture2("texture1.png");
 
-    cv::Mat img2 = cv::imread("./texture1.png", cv::IMREAD_UNCHANGED);
-    cv::cvtColor(img2, img2, cv::COLOR_BGRA2RGBA);
-
-    GLuint tex, tex2;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.cols, img.rows, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 img.data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-    glGenTextures(1, &tex2);
-    glBindTexture(GL_TEXTURE_2D, tex2);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img2.cols, img2.rows, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 img2.data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-
-
+    GLuint tex1 = texture1.GetTexture();
+    GLuint tex2 = texture2.GetTexture();
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -189,7 +172,7 @@ int main(void) {
         glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &invMatrix[0][0]);
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, tex);
+        glBindTexture(GL_TEXTURE_2D, tex1);
         glUniform1i(uniLocation[6], 0);
 
         glActiveTexture(GL_TEXTURE1);

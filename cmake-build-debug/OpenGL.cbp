@@ -96,6 +96,12 @@
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Sphere.h">
 			<Option target="main.cpp"/>
 		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Texture.cpp">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Texture.h">
+			<Option target="main.cpp"/>
+		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Torus.cpp">
 			<Option target="main.cpp"/>
 		</Unit>

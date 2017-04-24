@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o"
   "CMakeFiles/main.cpp.dir/Sphere.cpp.o"
+  "CMakeFiles/main.cpp.dir/Texture.cpp.o"
   "CMakeFiles/main.cpp.dir/Torus.cpp.o"
   "CMakeFiles/main.cpp.dir/Utility.cpp.o"
   "CMakeFiles/main.cpp.dir/VBO.cpp.o"

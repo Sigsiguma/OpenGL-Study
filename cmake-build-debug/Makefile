@@ -177,6 +177,33 @@ Sphere.cpp.s:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Sphere.cpp.s
 .PHONY : Sphere.cpp.s
 
+Texture.o: Texture.cpp.o
+
+.PHONY : Texture.o
+
+# target to build an object file
+Texture.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Texture.cpp.o
+.PHONY : Texture.cpp.o
+
+Texture.i: Texture.cpp.i
+
+.PHONY : Texture.i
+
+# target to preprocess a source file
+Texture.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Texture.cpp.i
+.PHONY : Texture.cpp.i
+
+Texture.s: Texture.cpp.s
+
+.PHONY : Texture.s
+
+# target to generate assembly for a file
+Texture.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Texture.cpp.s
+.PHONY : Texture.cpp.s
+
 Torus.o: Torus.cpp.o
 
 .PHONY : Torus.o
@@ -300,6 +327,9 @@ help:
 	@echo "... Sphere.o"
 	@echo "... Sphere.i"
 	@echo "... Sphere.s"
+	@echo "... Texture.o"
+	@echo "... Texture.i"
+	@echo "... Texture.s"
 	@echo "... Torus.o"
 	@echo "... Torus.i"
 	@echo "... Torus.s"
