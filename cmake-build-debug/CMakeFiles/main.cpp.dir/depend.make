@@ -177,8 +177,6 @@ CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.h
 CMakeFiles/main.cpp.dir/VBO.cpp.o: /usr/local/include/GL/glew.h
 
 CMakeFiles/main.cpp.dir/main.cpp.o: ../ProgramObjectCreator.h
-CMakeFiles/main.cpp.dir/main.cpp.o: ../Sphere.h
-CMakeFiles/main.cpp.dir/main.cpp.o: ../Texture.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../Torus.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../Utility.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../VBO.h
@@ -351,6 +349,12 @@ CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/constants.hpp
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/constants.inl
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/matrix_transform.hpp
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/matrix_transform.inl
+CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/quaternion.hpp
+CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/quaternion.inl
+CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtc/quaternion_simd.inl
+CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtx/norm.hpp
+CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtx/norm.inl
+CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtx/quaternion.hpp
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtx/transform.hpp
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/gtx/transform.inl
 CMakeFiles/main.cpp.dir/main.cpp.o: /usr/local/include/glm/integer.hpp

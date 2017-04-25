@@ -4,15 +4,15 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <cstdlib>
 #include <iostream>
 #include "ProgramObjectCreator.h"
 #include "VBO.h"
 #include "Utility.h"
 #include "Torus.h"
-#include "Sphere.h"
-#include "Texture.h"
 
 int main(void) {
 
@@ -31,7 +31,7 @@ int main(void) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *const window = glfwCreateWindow(width, height, "SAMPLE", NULL, NULL);
+    GLFWwindow *const window = glfwCreateWindow(width, height, "SAMPLE", nullptr, nullptr);
 
     if (window == nullptr) {
         std::cerr << "Can't create GLFW window." << std::endl;
@@ -64,21 +64,11 @@ int main(void) {
     attLocation.emplace_back(glGetAttribLocation(program, "position"));
     attLocation.emplace_back(glGetAttribLocation(program, "normal"));
     attLocation.emplace_back(glGetAttribLocation(program, "color"));
-    attLocation.emplace_back(glGetAttribLocation(program, "textureCoord"));
 
     std::vector<int> attStride;
     attStride.emplace_back(3);
     attStride.emplace_back(3);
     attStride.emplace_back(4);
-    attStride.emplace_back(2);
-
-    //MVP行列の作成
-    glm::mat4 modelMatrix = glm::mat4(1.0f);
-    glm::mat4 invMatrix = glm::mat4(1.0f);
-    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 10.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height, 0.1f,
-                                                  100.0f);
-    glm::mat4 vp = projectionMatrix * viewMatrix;
 
     //UniformのLocationを作成
     std::vector<int> uniLocation;
@@ -88,66 +78,36 @@ int main(void) {
     uniLocation.emplace_back(glGetUniformLocation(program, "lightPosition"));
     uniLocation.emplace_back(glGetUniformLocation(program, "ambientColor"));
     uniLocation.emplace_back(glGetUniformLocation(program, "eyeDirection"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "utexture"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "utexture2"));
+
+    Torus torus(64, 64, 0.5, 1.5);
+    std::vector<Vector3> torusPosition = torus.vertexPos_;
+    std::vector<Vector3> torusNormal = torus.normal_;
+    std::vector<Color> torusColor = torus.vertexColor_;
+    std::vector<unsigned short> torusIndex = torus.vertexIndex_;
+
+    VBO position(torusPosition.size() * sizeof(Vector3), &torusPosition[0]);
+    position.SetAttrib(attLocation[0], attStride[0]);
+    VBO normal(torusNormal.size() * sizeof(Vector3), &torusNormal[0]);
+    normal.SetAttrib(attLocation[1], attStride[1]);
+    VBO color(torusColor.size() * sizeof(Color), &torusColor[0]);
+    color.SetAttrib(attLocation[2], attStride[2]);
+    GLuint index = Util::createIBO(torusIndex.size() * sizeof(unsigned short), &torusIndex[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
 
     int count = 0;
 
-    auto lightPosition = glm::vec3(0.0, 0.0, 0.0);
+    auto lightPosition = glm::vec3(15.0, 10.0, 15.0);
     auto ambientColor = glm::vec4(0.1, 0.1, 0.1, 1.0);
-    auto eyeDirection = glm::vec3(0.0, 0.0, 20.0);
+    auto eyeDirection = glm::vec3(0.0, 0.0, 10.0);
     glUniform3fv(uniLocation[3], 1, &lightPosition[0]);
     glUniform4fv(uniLocation[4], 1, &ambientColor[0]);
     glUniform3fv(uniLocation[5], 1, &eyeDirection[0]);
 
 
-    std::vector<float> position = {
-            -1.0, 1.0, 0.0,
-            1.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0
-    };
+    //MVP行列の作成
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    glm::mat4 invMatrix = glm::mat4(1.0f);
 
-    std::vector<float> color = {
-            1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0
-    };
-
-    std::vector<float> textureCoord = {
-            0.0, 0.0,
-            1.0, 0.0,
-            0.0, 1.0,
-            1.0, 1.0
-    };
-
-    std::vector<unsigned short> index = {
-            0, 1, 2,
-            3, 2, 1
-    };
-
-    VBO vPosition = VBO(position.size() * sizeof(float), &position[0]);
-    vPosition.SetAttrib(attLocation[0], attStride[0]);
-    VBO vColor = VBO(color.size() * sizeof(float), &color[0]);
-    vColor.SetAttrib(attLocation[2], attStride[2]);
-    VBO vTextureCoord = VBO(textureCoord.size() * sizeof(float), &textureCoord[0]);
-    vTextureCoord.SetAttrib(attLocation[3], attStride[3]);
-
-    auto vIBO = Util::createIBO(index.size() * sizeof(unsigned short), &index[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vIBO);
-
-    //テクスチャの表示
-    Texture texture1("texture0.png");
-    Texture texture2("texture1.png");
-
-    GLuint tex1 = texture1.GetTexture();
-    GLuint tex2 = texture2.GetTexture();
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glm::mat4 mMatrix;
     glm::mat4 mvp;
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
@@ -157,29 +117,29 @@ int main(void) {
 
         Util::calcFPS(window, 1.0, "Test:");
 
-        double rad = (count % 360) * M_PI / 180;
-        double tx = cos(rad) * 3.5;
-        double ty = sin(rad) * 3.5;
-        double tz = sin(rad) * 3.5;
+        double rad = (count % 180) * M_PI / 90;
+        double rad2 = (count % 720) * M_PI / 360;
 
+        glm::quat quaternion(glm::vec3(rad2, 0, 0));
+
+        glm::vec3 camPosition(0.0, 0.0, 10.0);
+        glm::vec3 camUpDirection(0.0, 1.0, 0.0);
+        camPosition = quaternion * camPosition;
+        camUpDirection = quaternion * camUpDirection;
 
         //torusの描画
-        mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(0.1f, 1.0f, 0.0f));
-        mvp = vp * mMatrix;
-        invMatrix = glm::inverse(mMatrix);
+        glm::mat4 viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
+                                           camUpDirection);
+        glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height, 0.1f,
+                                                      100.0f);
+        mvp = projectionMatrix * viewMatrix * modelMatrix;
+        invMatrix = glm::inverse(modelMatrix);
+
         glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &mMatrix[0][0]);
+        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &modelMatrix[0][0]);
         glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &invMatrix[0][0]);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, tex1);
-        glUniform1i(uniLocation[6], 0);
-
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, tex2);
-        glUniform1i(uniLocation[7], 1);
-
-        glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, torusIndex.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 

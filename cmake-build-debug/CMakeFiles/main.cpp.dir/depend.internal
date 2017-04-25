@@ -178,8 +178,6 @@ CMakeFiles/main.cpp.dir/VBO.cpp.o
  /usr/local/include/GL/glew.h
 CMakeFiles/main.cpp.dir/main.cpp.o
  /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
- /Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
- /Users/siguma/CLionProjects/OpenGL-Study/Texture.h
  /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
  /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
  /Users/siguma/CLionProjects/OpenGL-Study/VBO.h
@@ -352,6 +350,12 @@ CMakeFiles/main.cpp.dir/main.cpp.o
  /usr/local/include/glm/gtc/constants.inl
  /usr/local/include/glm/gtc/matrix_transform.hpp
  /usr/local/include/glm/gtc/matrix_transform.inl
+ /usr/local/include/glm/gtc/quaternion.hpp
+ /usr/local/include/glm/gtc/quaternion.inl
+ /usr/local/include/glm/gtc/quaternion_simd.inl
+ /usr/local/include/glm/gtx/norm.hpp
+ /usr/local/include/glm/gtx/norm.inl
+ /usr/local/include/glm/gtx/quaternion.hpp
  /usr/local/include/glm/gtx/transform.hpp
  /usr/local/include/glm/gtx/transform.inl
  /usr/local/include/glm/integer.hpp
