@@ -13,6 +13,7 @@
 #include "VBO.h"
 #include "Utility.h"
 #include "Torus.h"
+#include "MouseDrag.h"
 
 int main(void) {
 
@@ -105,10 +106,24 @@ int main(void) {
 
 
     //MVP行列の作成
-    glm::mat4 modelMatrix = glm::mat4(1.0f);
     glm::mat4 invMatrix = glm::mat4(1.0f);
 
+    glm::vec3 camPosition(0.0, 0.0, 10.0);
+    glm::vec3 camUpDirection(0.0, 1.0, 0.0);
+
+    glm::mat4 viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
+                                       camUpDirection);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height, 0.1f,
+                                                  100.0f);
     glm::mat4 mvp;
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+    MouseDrag mouseDrag(width, height);
+
+    bool onclicked = false;
+    double startX, startY;
+
+    glm::quat quaternion(glm::vec3(0, 0, 0));
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
@@ -120,18 +135,20 @@ int main(void) {
         double rad = (count % 180) * M_PI / 90;
         double rad2 = (count % 720) * M_PI / 360;
 
-        glm::quat quaternion(glm::vec3(rad2, 0, 0));
 
-        glm::vec3 camPosition(0.0, 0.0, 10.0);
-        glm::vec3 camUpDirection(0.0, 1.0, 0.0);
-        camPosition = quaternion * camPosition;
-        camUpDirection = quaternion * camUpDirection;
+        if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            if(!onclicked) {
+                onclicked = true;
+                glfwGetCursorPos(window, &startX, &startY);
+            }
+            double currentX, currentY;
+            glfwGetCursorPos(window, &currentX, &currentY);
+            quaternion = mouseDrag.GetDragRotateMat(startX, startY, currentX, currentY, quaternion);
+            modelMatrix = glm::toMat4(quaternion);
+        } else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+            onclicked = false;
+        }
 
-        //torusの描画
-        glm::mat4 viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
-                                           camUpDirection);
-        glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height, 0.1f,
-                                                      100.0f);
         mvp = projectionMatrix * viewMatrix * modelMatrix;
         invMatrix = glm::inverse(modelMatrix);
 

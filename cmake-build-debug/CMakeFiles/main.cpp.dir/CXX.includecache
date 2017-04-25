@@ -6,6 +6,20 @@
 
 #IncludeRegexTransform: 
 
+/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.cpp
+MouseDrag.h
+/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h
+cmath
+-
+
+/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h
+glm/gtc/quaternion.hpp
+-
+glm/gtx/quaternion.hpp
+-
+glm/glm.hpp
+-
+
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp
 ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
@@ -117,6 +131,8 @@ Utility.h
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
 Torus.h
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+MouseDrag.h
+/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h
 
 /usr/local/include/GL/glew.h
 stddef.h

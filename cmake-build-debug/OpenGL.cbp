@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.cpp">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h">
+			<Option target="main.cpp"/>
+		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp">
 			<Option target="main.cpp"/>
 		</Unit>

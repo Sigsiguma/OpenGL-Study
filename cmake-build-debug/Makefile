@@ -123,6 +123,33 @@ main.cpp/fast:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/build
 .PHONY : main.cpp/fast
 
+MouseDrag.o: MouseDrag.cpp.o
+
+.PHONY : MouseDrag.o
+
+# target to build an object file
+MouseDrag.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/MouseDrag.cpp.o
+.PHONY : MouseDrag.cpp.o
+
+MouseDrag.i: MouseDrag.cpp.i
+
+.PHONY : MouseDrag.i
+
+# target to preprocess a source file
+MouseDrag.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/MouseDrag.cpp.i
+.PHONY : MouseDrag.cpp.i
+
+MouseDrag.s: MouseDrag.cpp.s
+
+.PHONY : MouseDrag.s
+
+# target to generate assembly for a file
+MouseDrag.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/MouseDrag.cpp.s
+.PHONY : MouseDrag.cpp.s
+
 ProgramObjectCreator.o: ProgramObjectCreator.cpp.o
 
 .PHONY : ProgramObjectCreator.o
@@ -321,6 +348,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main.cpp"
+	@echo "... MouseDrag.o"
+	@echo "... MouseDrag.i"
+	@echo "... MouseDrag.s"
 	@echo "... ProgramObjectCreator.o"
 	@echo "... ProgramObjectCreator.i"
 	@echo "... ProgramObjectCreator.s"
