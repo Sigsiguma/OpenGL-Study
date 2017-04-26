@@ -281,7 +281,7 @@ CMakeFiles/main.cpp.dir/VBO.cpp.o: /usr/local/include/GL/glew.h
 
 CMakeFiles/main.cpp.dir/main.cpp.o: ../MouseDrag.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../ProgramObjectCreator.h
-CMakeFiles/main.cpp.dir/main.cpp.o: ../Torus.h
+CMakeFiles/main.cpp.dir/main.cpp.o: ../Texture.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../Utility.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../VBO.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../main.cpp

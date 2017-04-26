@@ -12,7 +12,7 @@
 #include "ProgramObjectCreator.h"
 #include "VBO.h"
 #include "Utility.h"
-#include "Torus.h"
+#include "Texture.h"
 #include "MouseDrag.h"
 
 int main(void) {
@@ -52,6 +52,7 @@ int main(void) {
     glClearDepth(1.0);
     glEnable(GL_DEPTH_TEST);
 
+
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
     const GLuint program = programCreator.GetProgramObject();
     glUseProgram(program);
@@ -63,67 +64,84 @@ int main(void) {
 
     std::vector<int> attLocation;
     attLocation.emplace_back(glGetAttribLocation(program, "position"));
-    attLocation.emplace_back(glGetAttribLocation(program, "normal"));
     attLocation.emplace_back(glGetAttribLocation(program, "color"));
+    attLocation.emplace_back(glGetAttribLocation(program, "textureCoord"));
 
     std::vector<int> attStride;
     attStride.emplace_back(3);
-    attStride.emplace_back(3);
     attStride.emplace_back(4);
+    attStride.emplace_back(2);
 
     //UniformのLocationを作成
     std::vector<int> uniLocation;
     uniLocation.emplace_back(glGetUniformLocation(program, "mvpMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "mMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "invMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "lightPosition"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "ambientColor"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "eyeDirection"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "utexture"));
 
-    Torus torus(64, 64, 0.5, 1.5);
-    std::vector<Vector3> torusPosition = torus.vertexPos_;
-    std::vector<Vector3> torusNormal = torus.normal_;
-    std::vector<Color> torusColor = torus.vertexColor_;
-    std::vector<unsigned short> torusIndex = torus.vertexIndex_;
+    std::vector<float> texturePosition = {
+            -1.0, 1.0, 0.0,
+            1.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0,
+            1.0, -1.0, 0.0
+    };
 
-    VBO position(torusPosition.size() * sizeof(Vector3), &torusPosition[0]);
+    std::vector<float> textureColor = {
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0
+    };
+
+    std::vector<float> textureCoord = {
+            0.0, 0.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            1.0, 1.0
+    };
+
+    std::vector<unsigned short> textureIndex = {
+            0, 1, 2,
+            3, 2, 1
+    };
+
+
+    VBO position(texturePosition.size() * sizeof(float), &texturePosition[0]);
     position.SetAttrib(attLocation[0], attStride[0]);
-    VBO normal(torusNormal.size() * sizeof(Vector3), &torusNormal[0]);
-    normal.SetAttrib(attLocation[1], attStride[1]);
-    VBO color(torusColor.size() * sizeof(Color), &torusColor[0]);
+    VBO color(textureColor.size() * sizeof(float), &textureColor[0]);
+    color.SetAttrib(attLocation[1], attStride[1]);
+    VBO coord(textureCoord.size() * sizeof(float), &textureCoord[0]);
     color.SetAttrib(attLocation[2], attStride[2]);
-    GLuint index = Util::createIBO(torusIndex.size() * sizeof(unsigned short), &torusIndex[0]);
+    GLuint index = Util::createIBO(textureIndex.size() * sizeof(unsigned short), &textureIndex[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
 
     int count = 0;
 
-    auto lightPosition = glm::vec3(15.0, 10.0, 15.0);
-    auto ambientColor = glm::vec4(0.1, 0.1, 0.1, 1.0);
-    auto eyeDirection = glm::vec3(0.0, 0.0, 10.0);
-    glUniform3fv(uniLocation[3], 1, &lightPosition[0]);
-    glUniform4fv(uniLocation[4], 1, &ambientColor[0]);
-    glUniform3fv(uniLocation[5], 1, &eyeDirection[0]);
-
-
     //MVP行列の作成
-    glm::mat4 invMatrix = glm::mat4(1.0f);
-
-    glm::vec3 camPosition(0.0, 0.0, 10.0);
+    glm::vec3 camPosition(0.0, 5.0, 10.0);
     glm::vec3 camUpDirection(0.0, 1.0, 0.0);
 
-    glm::mat4 viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
-                                       camUpDirection);
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height, 0.1f,
                                                   100.0f);
     glm::mat4 mvp;
-    glm::mat4 modelMatrix = glm::mat4(1.0f);
 
     MouseDrag mouseDrag(width, height);
+
+    Texture texture0("./texture0.png");
+    Texture texture1("./texture1.png");
+
+    GLuint tex0 = texture0.GetTexture();
+    GLuint tex1 = texture1.GetTexture();
 
     bool onclicked = false;
     double startX, startY;
 
     glm::quat quaternion(glm::vec3(0, 0, 0));
+
+    glm::mat4 mMatrix = modelMatrix;
+
+    glEnable(GL_BLEND);
+//    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
@@ -135,28 +153,49 @@ int main(void) {
         double rad = (count % 180) * M_PI / 90;
         double rad2 = (count % 720) * M_PI / 360;
 
+        glm::mat4 viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
+                                           camUpDirection);
+        glm::mat4 invMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 0.0), camPosition, camUpDirection);
 
-        if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-            if(!onclicked) {
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            if (!onclicked) {
                 onclicked = true;
                 glfwGetCursorPos(window, &startX, &startY);
             }
             double currentX, currentY;
             glfwGetCursorPos(window, &currentX, &currentY);
             quaternion = mouseDrag.GetDragRotateMat(startX, startY, currentX, currentY, quaternion);
-            modelMatrix = glm::toMat4(quaternion);
-        } else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+            glm::mat4 quatMat = glm::toMat4(quaternion);
+            viewMatrix = viewMatrix * quatMat;
+            invMatrix = invMatrix * quatMat;
+        } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
             onclicked = false;
         }
 
-        mvp = projectionMatrix * viewMatrix * modelMatrix;
-        invMatrix = glm::inverse(modelMatrix);
+        invMatrix = glm::inverse(invMatrix);
 
+
+        mMatrix = glm::rotate(modelMatrix, static_cast<float>(M_PI_2), glm::vec3(1.0f, 0.0f, 0.0f));
+        mMatrix = glm::scale(mMatrix, glm::vec3(3.0, 3.0, 1.0));
+        mvp = projectionMatrix * viewMatrix * mMatrix;
         glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &modelMatrix[0][0]);
-        glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &invMatrix[0][0]);
 
-        glDrawElements(GL_TRIANGLES, torusIndex.size(), GL_UNSIGNED_SHORT, 0);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, tex1);
+        glUniform1i(uniLocation[1], 0);
+
+        glDrawElements(GL_TRIANGLES, textureIndex.size(), GL_UNSIGNED_SHORT, 0);
+
+        mMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 1.0, 0.0));
+        mMatrix = mMatrix * invMatrix;
+        mvp = projectionMatrix * viewMatrix * mMatrix;
+        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, tex0);
+        glUniform1i(uniLocation[1], 1);
+
+        glDrawElements(GL_TRIANGLES, textureIndex.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 
