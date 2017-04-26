@@ -73,10 +73,10 @@ GLuint Util::createIBO(GLsizeiptr size, GLvoid *data) {
     return ibo;
 }
 
-Color Util::hsva2rgb(int h, float s, float v, float a) {
+Color Util::hsva2rgb(float h, float s, float v, float a) {
     if (s > 1 || v > 1 || a > 1) { return Color(1, 1, 1, 1); }
 
-    float th = h % 360;
+    float th = fmod(h, 360.0f);
     int i = static_cast<int>(floor(th / 60));
     float f = th / 60 - i;
     float m = v * (1 - s);

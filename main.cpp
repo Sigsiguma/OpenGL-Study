@@ -53,6 +53,8 @@ int main(void) {
     glClearDepth(1.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    glEnable(GL_BLEND);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
 
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
@@ -72,6 +74,7 @@ int main(void) {
     std::vector<int> uniLocation;
     uniLocation.emplace_back(glGetUniformLocation(program, "mvpMatrix"));
     uniLocation.emplace_back(glGetUniformLocation(program, "pointSize"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
 
     GLuint sphereVAO;
     //頂点配列オブジェクトの作成
@@ -122,11 +125,9 @@ int main(void) {
 
     MouseDrag mouseDrag(width, height);
 
-    Texture texture0("./texture0.png");
-    Texture texture1("./texture1.png");
+    Texture texture("./texture.png");
 
-    GLuint tex0 = texture0.GetTexture();
-    GLuint tex1 = texture1.GetTexture();
+    GLuint tex = texture.GetTexture();
 
     bool onclicked = false;
     double startX, startY;
@@ -138,7 +139,7 @@ int main(void) {
     glEnable(GL_BLEND);
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
-    float pointSize = 10.0f;
+    float pointSize = 32.0f;
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
@@ -172,6 +173,10 @@ int main(void) {
         mvp = projectionMatrix * viewMatrix * mMatrix;
         glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
         glUniform1f(uniLocation[1], pointSize);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glUniform1i(uniLocation[2], 0);
 
         glDrawArrays(GL_POINTS, 0, sphere.vertexPos_.size());
 

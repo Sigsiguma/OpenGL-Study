@@ -37,7 +37,7 @@ namespace Util {
 
     GLuint createIBO(GLsizeiptr size, GLvoid *data);
 
-    Color hsva2rgb(int h, float s, float v, float a);
+    Color hsva2rgb(float h, float s, float v, float a);
 }
 
 
