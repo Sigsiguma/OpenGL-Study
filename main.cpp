@@ -109,7 +109,7 @@ int main(void) {
     VBO color(textureColor.size() * sizeof(float), &textureColor[0]);
     color.SetAttrib(attLocation[1], attStride[1]);
     VBO coord(textureCoord.size() * sizeof(float), &textureCoord[0]);
-    color.SetAttrib(attLocation[2], attStride[2]);
+    coord.SetAttrib(attLocation[2], attStride[2]);
     GLuint index = Util::createIBO(textureIndex.size() * sizeof(unsigned short), &textureIndex[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
 
@@ -141,7 +141,7 @@ int main(void) {
     glm::mat4 mMatrix = modelMatrix;
 
     glEnable(GL_BLEND);
-//    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
