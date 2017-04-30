@@ -4,10 +4,15 @@ precision mediump float;
 out vec4 fragment;
 
 uniform sampler2D textureData;
+uniform bool useTexture;
 in vec4 vColor;
 in vec2 vTexCoord;
 
 void main() {
-    vec4 smpColor = texture(textureData, vTexCoord);
-    fragment = vColor * smpColor;
+    if(useTexture) {
+        vec4 smpColor = texture(textureData, vTexCoord);
+        fragment = smpColor;
+    } else {
+        fragment = vColor;
+    }
 }

@@ -14,6 +14,7 @@
 #include "Utility.h"
 #include "Texture.h"
 #include "Sphere.h"
+#include "Torus.h"
 #include "MouseDrag.h"
 
 int main() {
@@ -54,7 +55,6 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     glEnable(GL_BLEND);
-    glEnable(GL_STENCIL_TEST);
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
 
@@ -78,60 +78,42 @@ int main() {
     //UniformのLocationを作成
     std::vector<int> uniLocation;
     uniLocation.emplace_back(glGetUniformLocation(program, "mvpMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "lightVec"));
     uniLocation.emplace_back(glGetUniformLocation(program, "invMatrix"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "lightVec"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "useLight"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "outline"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "useTexture"));
 
-    GLuint vao;
+    GLuint sphereVAO;
     //頂点配列オブジェクトの作成
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    glGenVertexArrays(1, &sphereVAO);
+    glBindVertexArray(sphereVAO);
 
-    std::vector<float> position = {
-            -1.0, 1.0, 0.0,
-            1.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0
-    };
+    Sphere sphere(64, 64, 1.0);
 
-    std::vector<float> color = {
-            1.0, 0.0, 0.0, 1.0,
-            0.0, 1.0, 0.0, 1.0,
-            0.0, 0.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0
-    };
+    VBO spherePosition(sphere.vertexPos_.size() * sizeof(Vector3), &sphere.vertexPos_[0]);
+    spherePosition.SetAttrib(attLocation[0], attStride[0]);
+    VBO sphereColor(sphere.vertexColor_.size() * sizeof(Color), &sphere.vertexColor_[0]);
+    sphereColor.SetAttrib(attLocation[1], attStride[1]);
+    VBO sphereNormal(sphere.normal_.size() * sizeof(Vector3), &sphere.normal_[0]);
+    sphereNormal.SetAttrib(attLocation[2], attStride[2]);
+    GLuint sphereIndex = Util::createIBO(sphere.vertexIndex_.size() * sizeof(unsigned short), &sphere.vertexIndex_[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereIndex);
 
-    std::vector<float> normal = {
-            0.0, 0.0, 1.0,
-            0.0, 0.0, 1.0,
-            0.0, 0.0, 1.0,
-            0.0, 0.0, 1.0
-    };
+    GLuint torusVAO;
+    glGenVertexArrays(1, &torusVAO);
+    glBindVertexArray(torusVAO);
 
-    std::vector<float> texCoord = {
-            0.0, 0.0,
-            1.0, 0.0,
-            0.0, 1.0,
-            1.0, 1.0
-    };
-
-    std::vector<unsigned short> index = {
-            0, 1, 2,
-            3, 2, 1
-    };
-
-    glm::vec3 lightVec(1.0, 1.0, 1.0);
-
-    VBO boardPosition(position.size() * sizeof(float), &position[0]);
-    boardPosition.SetAttrib(attLocation[0], attStride[0]);
-    VBO boardColor(color.size() * sizeof(float), &color[0]);
-    boardColor.SetAttrib(attLocation[1], attStride[1]);
-    VBO boardNormal(normal.size() * sizeof(float), &normal[0]);
-    boardNormal.SetAttrib(attLocation[2], attStride[2]);
-    VBO boardTexCoord(texCoord.size() * sizeof(float), &texCoord[0]);
-    boardTexCoord.SetAttrib(attLocation[3], attStride[3]);
-    GLuint boardIndex = Util::createIBO(index.size() * sizeof(unsigned short), &index[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boardIndex);
+    Torus torus(64, 64, 0.25, 1.0);
+    VBO torusPosition(torus.vertexPos_.size() * sizeof(Vector3), &torus.vertexPos_[0]);
+    torusPosition.SetAttrib(attLocation[0], attStride[0]);
+    VBO torusColor(torus.vertexColor_.size() * sizeof(Color), &torus.vertexColor_[0]);
+    torusColor.SetAttrib(attLocation[1], attStride[1]);
+    VBO torusNormal(torus.normal_.size() * sizeof(Vector3), &torus.normal_[0]);
+    torusNormal.SetAttrib(attLocation[2], attStride[2]);
+    GLuint torusIndex = Util::createIBO(torus.vertexIndex_.size() * sizeof(unsigned short), &torus.vertexIndex_[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, torusIndex);
 
     int count = 0;
 
@@ -147,19 +129,21 @@ int main() {
 
     MouseDrag mouseDrag(width, height);
 
-    Texture texture("texture.png");
-
-    GLuint tex = texture.GetTexture();
-
-    bool onclicked = false;
-    double startX, startY;
-
     glm::quat quaternion(glm::vec3(0, 0, 0));
+
+    glm::vec3 lightVec(1.0, 1.0, 1.0);
+    glUniform3fv(uniLocation[2], 1, &lightVec[0]);
 
     glm::mat4 mMatrix = modelMatrix;
 
     glEnable(GL_BLEND);
     glClearStencil(0);
+
+    Texture texture("texture1.png");
+    GLuint tex = texture.GetTexture();
+
+    bool onclicked = false;
+    double startX, startY;
 
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
@@ -169,7 +153,6 @@ int main() {
         Util::calcFPS(window, 1.0, "Test:");
 
         double rad = (count % 360) * M_PI / 180;
-        double rad2 = (count % 720) * M_PI / 360;
 
         glm::mat4 viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
                                            camUpDirection);
@@ -188,36 +171,51 @@ int main() {
             onclicked = false;
         }
 
+        glBindVertexArray(torusVAO);
+        glEnable(GL_STENCIL_TEST);
+        glColorMask(false, false, false, false);
+        glDepthMask(false);
         glStencilFunc(GL_ALWAYS, 1, ~0);
         glStencilOp(GL_KEEP, GL_REPLACE, GL_REPLACE);
-        mMatrix = glm::translate(modelMatrix, glm::vec3(-0.25, 0.25, -0.5));
+        mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(0.0, 1.0, 1.0));
         mvp = projectionMatrix * viewMatrix * mMatrix;
         glm::mat4 invMatrix = glm::inverse(mMatrix);
+        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
+        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &invMatrix[0][0]);
+        glUniform1i(uniLocation[4], 0);
+        glUniform1i(uniLocation[5], 1);
+        glUniform1i(uniLocation[6], 0);
+        glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
+
+        glBindVertexArray(sphereVAO);
+        glColorMask(true, true, true, true);
+        glDepthMask(true);
+        glStencilFunc(GL_EQUAL, 0, ~0);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        mMatrix = glm::scale(modelMatrix, glm::vec3(50.0, 50.0, 50.0));
+        mvp = projectionMatrix * viewMatrix * mMatrix;
+        invMatrix = glm::inverse(mMatrix);
+        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
+        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &invMatrix[0][0]);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, tex);
-        glUniform1i(uniLocation[1], 0);
-        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniform3fv(uniLocation[2], 1, &lightVec[0]);
-        glUniformMatrix4fv(uniLocation[3], 1, GL_FALSE, &invMatrix[0][0]);
-        glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
+        glUniform1i(uniLocation[3], 0);
+        glUniform1i(uniLocation[4], 0);
+        glUniform1i(uniLocation[5], 0);
+        glUniform1i(uniLocation[6], 1);
+        glDrawElements(GL_TRIANGLES, sphere.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
-        glStencilFunc(GL_ALWAYS, 0, ~0);
-        glStencilOp(GL_KEEP, GL_INCR, GL_INCR);
-        mMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 0.0, 0.0));
+        glBindVertexArray(torusVAO);
+        glDisable(GL_STENCIL_TEST);
+        mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(0.0, 1.0, 1.0));
         mvp = projectionMatrix * viewMatrix * mMatrix;
         invMatrix = glm::inverse(mMatrix);
         glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniformMatrix4fv(uniLocation[3], 1, GL_FALSE, &invMatrix[0][0]);
-        glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
-
-        glStencilFunc(GL_EQUAL, 2, ~0);
-        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-        mMatrix = glm::translate(modelMatrix, glm::vec3(0.25, -0.25, 0.5));
-        mvp = projectionMatrix * viewMatrix * mMatrix;
-        invMatrix = glm::inverse(mMatrix);
-        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniformMatrix4fv(uniLocation[3], 1, GL_FALSE, &invMatrix[0][0]);
-        glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
+        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &invMatrix[0][0]);
+        glUniform1i(uniLocation[4], 1);
+        glUniform1i(uniLocation[5], 0);
+        glUniform1i(uniLocation[6], 0);
+        glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 
