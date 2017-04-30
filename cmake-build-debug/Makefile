@@ -123,6 +123,33 @@ main.cpp/fast:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/build
 .PHONY : main.cpp/fast
 
+Cube.o: Cube.cpp.o
+
+.PHONY : Cube.o
+
+# target to build an object file
+Cube.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Cube.cpp.o
+.PHONY : Cube.cpp.o
+
+Cube.i: Cube.cpp.i
+
+.PHONY : Cube.i
+
+# target to preprocess a source file
+Cube.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Cube.cpp.i
+.PHONY : Cube.cpp.i
+
+Cube.s: Cube.cpp.s
+
+.PHONY : Cube.s
+
+# target to generate assembly for a file
+Cube.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Cube.cpp.s
+.PHONY : Cube.cpp.s
+
 MouseDrag.o: MouseDrag.cpp.o
 
 .PHONY : MouseDrag.o
@@ -348,6 +375,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main.cpp"
+	@echo "... Cube.o"
+	@echo "... Cube.i"
+	@echo "... Cube.s"
 	@echo "... MouseDrag.o"
 	@echo "... MouseDrag.i"
 	@echo "... MouseDrag.s"

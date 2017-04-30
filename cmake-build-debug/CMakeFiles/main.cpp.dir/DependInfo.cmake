@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/siguma/CLionProjects/OpenGL-Study/Cube.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/Cube.cpp.o"
   "/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/MouseDrag.cpp.o"
   "/Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o"
   "/Users/siguma/CLionProjects/OpenGL-Study/Sphere.cpp" "/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug/CMakeFiles/main.cpp.dir/Sphere.cpp.o"

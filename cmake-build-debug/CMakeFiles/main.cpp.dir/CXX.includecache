@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/Users/siguma/CLionProjects/OpenGL-Study/Cube.cpp
+Cube.h
+/Users/siguma/CLionProjects/OpenGL-Study/Cube.h
+
+/Users/siguma/CLionProjects/OpenGL-Study/Cube.h
+vector
+-
+Utility.h
+/Users/siguma/CLionProjects/OpenGL-Study/Utility.h
+
 /Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.cpp
 MouseDrag.h
 /Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h
@@ -135,6 +145,8 @@ Sphere.h
 /Users/siguma/CLionProjects/OpenGL-Study/Sphere.h
 Torus.h
 /Users/siguma/CLionProjects/OpenGL-Study/Torus.h
+Cube.h
+/Users/siguma/CLionProjects/OpenGL-Study/Cube.h
 MouseDrag.h
 /Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h
 

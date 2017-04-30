@@ -15,6 +15,7 @@
 #include "Texture.h"
 #include "Sphere.h"
 #include "Torus.h"
+#include "Cube.h"
 #include "MouseDrag.h"
 
 int main() {
@@ -84,6 +85,8 @@ int main() {
     uniLocation.emplace_back(glGetUniformLocation(program, "useLight"));
     uniLocation.emplace_back(glGetUniformLocation(program, "outline"));
     uniLocation.emplace_back(glGetUniformLocation(program, "useTexture"));
+
+    Cube cube(2.0);
 
     GLuint sphereVAO;
     //頂点配列オブジェクトの作成
