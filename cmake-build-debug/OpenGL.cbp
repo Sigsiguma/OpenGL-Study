@@ -90,6 +90,12 @@
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/Cube.h">
 			<Option target="main.cpp"/>
 		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/FrameBuffer.cpp">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/FrameBuffer.h">
+			<Option target="main.cpp"/>
+		</Unit>
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.cpp">
 			<Option target="main.cpp"/>
 		</Unit>

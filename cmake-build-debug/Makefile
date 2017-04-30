@@ -150,6 +150,33 @@ Cube.cpp.s:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/Cube.cpp.s
 .PHONY : Cube.cpp.s
 
+FrameBuffer.o: FrameBuffer.cpp.o
+
+.PHONY : FrameBuffer.o
+
+# target to build an object file
+FrameBuffer.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/FrameBuffer.cpp.o
+.PHONY : FrameBuffer.cpp.o
+
+FrameBuffer.i: FrameBuffer.cpp.i
+
+.PHONY : FrameBuffer.i
+
+# target to preprocess a source file
+FrameBuffer.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/FrameBuffer.cpp.i
+.PHONY : FrameBuffer.cpp.i
+
+FrameBuffer.s: FrameBuffer.cpp.s
+
+.PHONY : FrameBuffer.s
+
+# target to generate assembly for a file
+FrameBuffer.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/FrameBuffer.cpp.s
+.PHONY : FrameBuffer.cpp.s
+
 MouseDrag.o: MouseDrag.cpp.o
 
 .PHONY : MouseDrag.o
@@ -378,6 +405,9 @@ help:
 	@echo "... Cube.o"
 	@echo "... Cube.i"
 	@echo "... Cube.s"
+	@echo "... FrameBuffer.o"
+	@echo "... FrameBuffer.i"
+	@echo "... FrameBuffer.s"
 	@echo "... MouseDrag.o"
 	@echo "... MouseDrag.i"
 	@echo "... MouseDrag.s"

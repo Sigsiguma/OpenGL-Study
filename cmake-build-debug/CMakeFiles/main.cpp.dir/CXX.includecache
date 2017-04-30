@@ -16,6 +16,14 @@ vector
 Utility.h
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
 
+/Users/siguma/CLionProjects/OpenGL-Study/FrameBuffer.cpp
+FrameBuffer.h
+/Users/siguma/CLionProjects/OpenGL-Study/FrameBuffer.h
+
+/Users/siguma/CLionProjects/OpenGL-Study/FrameBuffer.h
+GL/glew.h
+-
+
 /Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.cpp
 MouseDrag.h
 /Users/siguma/CLionProjects/OpenGL-Study/MouseDrag.h
@@ -137,6 +145,8 @@ ProgramObjectCreator.h
 /Users/siguma/CLionProjects/OpenGL-Study/ProgramObjectCreator.h
 VBO.h
 /Users/siguma/CLionProjects/OpenGL-Study/VBO.h
+FrameBuffer.h
+/Users/siguma/CLionProjects/OpenGL-Study/FrameBuffer.h
 Utility.h
 /Users/siguma/CLionProjects/OpenGL-Study/Utility.h
 Texture.h

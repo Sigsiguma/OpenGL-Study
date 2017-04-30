@@ -26,7 +26,7 @@ file(GLOB SOURCE_FILES
         *.h
         )
 
-add_executable(main.cpp ${SOURCE_FILES} ProgramObjectCreator.h ProgramObjectCreator.cpp VBO.h VBO.cpp Utility.h Utility.cpp Sphere.cpp Sphere.h Texture.cpp Texture.h MouseDrag.cpp MouseDrag.h Cube.cpp Cube.h)
+add_executable(main.cpp ${SOURCE_FILES} ProgramObjectCreator.h ProgramObjectCreator.cpp VBO.h VBO.cpp Utility.h Utility.cpp Sphere.cpp Sphere.h Texture.cpp Texture.h MouseDrag.cpp MouseDrag.h Cube.cpp Cube.h FrameBuffer.cpp FrameBuffer.h)
 
 target_link_libraries(main.cpp ${OPENGL_LIBRARIES} glfw3)
 target_link_libraries(main.cpp ${OpenCV_LIBS})

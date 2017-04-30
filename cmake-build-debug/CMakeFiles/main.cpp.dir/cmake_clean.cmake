@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.cpp.dir/Cube.cpp.o"
+  "CMakeFiles/main.cpp.dir/FrameBuffer.cpp.o"
   "CMakeFiles/main.cpp.dir/MouseDrag.cpp.o"
   "CMakeFiles/main.cpp.dir/ProgramObjectCreator.cpp.o"
   "CMakeFiles/main.cpp.dir/Sphere.cpp.o"

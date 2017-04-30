@@ -24,10 +24,12 @@ Cube::Cube(float side) {
     vertexPos_.emplace_back(hs, -hs, hs);
     vertexPos_.emplace_back(-hs, -hs, hs);
     vertexPos_.emplace_back(hs, -hs, -hs);
+    vertexPos_.emplace_back(hs, hs, -hs);
     vertexPos_.emplace_back(hs, hs, hs);
     vertexPos_.emplace_back(hs, -hs, hs);
     vertexPos_.emplace_back(-hs, -hs, -hs);
     vertexPos_.emplace_back(-hs, -hs, hs);
+    vertexPos_.emplace_back(-hs, hs, hs);
     vertexPos_.emplace_back(-hs, hs, -hs);
 
     normal_.emplace_back(-1.0, -1.0, 1.0);

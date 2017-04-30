@@ -11,11 +11,12 @@
 class Sphere {
 
 public:
-    Sphere(unsigned int row, unsigned int column, float rad);
+    Sphere(unsigned int row, unsigned int column, double rad);
 
     std::vector<Vector3> vertexPos_;
     std::vector<Vector3> normal_;
     std::vector<Color> vertexColor_;
+    std::vector<float> texCoord_;
     std::vector<unsigned short> vertexIndex_;
 };
 

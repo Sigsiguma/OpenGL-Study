@@ -7,6 +7,10 @@ CMakeFiles/main.cpp.dir/Cube.cpp.o: ../Utility.h
 CMakeFiles/main.cpp.dir/Cube.cpp.o: /usr/local/include/GL/glew.h
 CMakeFiles/main.cpp.dir/Cube.cpp.o: /usr/local/include/GLFW/glfw3.h
 
+CMakeFiles/main.cpp.dir/FrameBuffer.cpp.o: ../FrameBuffer.cpp
+CMakeFiles/main.cpp.dir/FrameBuffer.cpp.o: ../FrameBuffer.h
+CMakeFiles/main.cpp.dir/FrameBuffer.cpp.o: /usr/local/include/GL/glew.h
+
 CMakeFiles/main.cpp.dir/MouseDrag.cpp.o: ../MouseDrag.cpp
 CMakeFiles/main.cpp.dir/MouseDrag.cpp.o: ../MouseDrag.h
 CMakeFiles/main.cpp.dir/MouseDrag.cpp.o: /usr/local/include/glm/common.hpp
@@ -286,6 +290,7 @@ CMakeFiles/main.cpp.dir/VBO.cpp.o: ../VBO.h
 CMakeFiles/main.cpp.dir/VBO.cpp.o: /usr/local/include/GL/glew.h
 
 CMakeFiles/main.cpp.dir/main.cpp.o: ../Cube.h
+CMakeFiles/main.cpp.dir/main.cpp.o: ../FrameBuffer.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../MouseDrag.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../ProgramObjectCreator.h
 CMakeFiles/main.cpp.dir/main.cpp.o: ../Sphere.h

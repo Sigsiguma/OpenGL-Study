@@ -5,14 +5,14 @@
 #include "Sphere.h"
 #include <cmath>
 
-Sphere::Sphere(unsigned int row, unsigned int column, float rad) {
+Sphere::Sphere(unsigned int row, unsigned int column, double rad) {
 
     for (int i = 0; i <= row; ++i) {
-        double r = M_PI / row * i;
-        double rr = cos(r);
-        double ry = sin(r);
+        double r = M_PI / static_cast<double>(row) * i;
+        double ry = cos(r);
+        double rr = sin(r);
         for (int ii = 0; ii <= column; ++ii) {
-            double tr = M_PI * 2 / column * ii;
+            double tr = M_PI * 2.0 / static_cast<double>(column) * ii;
             double tx = rr * rad * cos(tr);
             double ty = ry * rad;
             double tz = rr * rad * sin(tr);
@@ -22,6 +22,8 @@ Sphere::Sphere(unsigned int row, unsigned int column, float rad) {
             normal_.emplace_back(rx, ry, rz);
             Color colors = Util::hsva2rgb(360.0f / row * i, 1, 1, 1);
             vertexColor_.emplace_back(colors);
+            texCoord_.emplace_back(1 - 1 / column * ii);
+            texCoord_.emplace_back(1 / row * i);
         }
     }
 
