@@ -83,24 +83,6 @@ int main() {
     uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
     uniLocation.emplace_back(glGetUniformLocation(program, "useLight"));
 
-    GLuint sphereVAO;
-    //頂点配列オブジェクトの作成
-    glGenVertexArrays(1, &sphereVAO);
-    glBindVertexArray(sphereVAO);
-
-    Sphere sphere(64, 64, 1.0);
-
-    VBO spherePosition(sphere.vertexPos_.size() * sizeof(Vector3), &sphere.vertexPos_[0]);
-    spherePosition.SetAttrib(attLocation[0], attStride[0]);
-    VBO sphereColor(sphere.vertexColor_.size() * sizeof(Color), &sphere.vertexColor_[0]);
-    sphereColor.SetAttrib(attLocation[1], attStride[1]);
-    VBO sphereNormal(sphere.normal_.size() * sizeof(Vector3), &sphere.normal_[0]);
-    sphereNormal.SetAttrib(attLocation[2], attStride[2]);
-    VBO sphereTexCoord(sphere.texCoord_.size() * sizeof(float), &sphere.texCoord_[0]);
-    sphereTexCoord.SetAttrib(attLocation[3], attStride[3]);
-    GLuint sphereIndex = Util::createIBO(sphere.vertexIndex_.size() * sizeof(unsigned short), &sphere.vertexIndex_[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereIndex);
-
     GLuint cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
     glBindVertexArray(cubeVAO);
@@ -149,6 +131,7 @@ int main() {
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
         glBindFramebuffer(GL_FRAMEBUFFER, fBuffer.frameBuffer_);
+        glViewport(0, 0, 512, 512);
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClearDepth(1.0);
@@ -166,20 +149,6 @@ int main() {
         glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 5.0), glm::vec3(0.0, 0.0, 0.0),
                                            camUpDirection);
 
-        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-            if (!onclicked) {
-                onclicked = true;
-                glfwGetCursorPos(window, &startX, &startY);
-            }
-            double currentX, currentY;
-            glfwGetCursorPos(window, &currentX, &currentY);
-            quaternion = mouseDrag.GetDragRotateMat(startX, startY, currentX, currentY, quaternion);
-            glm::mat4 quatMat = glm::toMat4(quaternion);
-            viewMatrix = viewMatrix * quatMat;
-        } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
-            onclicked = false;
-        }
-
         glBindVertexArray(cubeVAO);
         mMatrix = glm::scale(modelMatrix, glm::vec3(50.0, 50.0, 50.0));
         mvp = projectionMatrix * viewMatrix * mMatrix;
@@ -190,7 +159,7 @@ int main() {
         glUniform3fv(uniLocation[2], 1, &lightVec[0]);
         glUniform1i(uniLocation[3], 0);
         glUniform1i(uniLocation[4], false);
-        glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size() , GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
         mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(0.0f, 1.0f, 0.0f));
         mvp = projectionMatrix * viewMatrix * mMatrix;
@@ -201,9 +170,10 @@ int main() {
         glUniform3fv(uniLocation[2], 1, &lightVec[0]);
         glUniform1i(uniLocation[3], 0);
         glUniform1i(uniLocation[4], true);
-        glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size() , GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, 1280, 960);
         glClearColor(0.0f, 0.7f, 0.7f, 1.0f);
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -215,6 +185,7 @@ int main() {
                                             100.0f);
 
         glBindTexture(GL_TEXTURE_2D, fBuffer.frameTexture_);
+        glGenerateMipmap(GL_TEXTURE_2D);
         mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(1.0, 1.0, 0.0));
         mvp = projectionMatrix * viewMatrix * mMatrix;
         invMatrix = glm::inverse(mMatrix);
