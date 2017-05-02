@@ -21,8 +21,8 @@
 
 int main() {
 
-    const int width = 640;
-    const int height = 480;
+    const int width = 256;
+    const int height = 256;
 
     if (glfwInit() == GL_FALSE) {
         std::cerr << "Can't initialize GLFW" << std::endl;
@@ -60,7 +60,6 @@ int main() {
 
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
     const GLuint program = programCreator.GetProgramObject();
-    glUseProgram(program);
 
 
     std::vector<int> attLocation;
@@ -98,6 +97,54 @@ int main() {
     cubeTexCoord.SetAttrib(attLocation[3], attStride[3]);
     GLuint cubeIndex = Util::createIBO(cube.vertexIndex_.size() * sizeof(unsigned short), &cube.vertexIndex_[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndex);
+
+    const ProgramObjectCreator blurProgramCreator = ProgramObjectCreator("blur.vert", "blur.frag");
+    const GLuint blurProgram = blurProgramCreator.GetProgramObject();
+
+
+    std::vector<int> bAttLocation;
+    bAttLocation.emplace_back(glGetAttribLocation(blurProgram, "position"));
+    bAttLocation.emplace_back(glGetAttribLocation(blurProgram, "color"));
+
+    std::vector<int> bAttStride;
+    bAttStride.emplace_back(3);
+    bAttStride.emplace_back(4);
+
+    //UniformのLocationを作成
+    std::vector<int> bUniLocation;
+    bUniLocation.emplace_back(glGetUniformLocation(blurProgram, "mvpMatrix"));
+    bUniLocation.emplace_back(glGetUniformLocation(blurProgram, "textureData"));
+    bUniLocation.emplace_back(glGetUniformLocation(blurProgram, "useBlur"));
+
+    GLuint blurVAO;
+    glGenVertexArrays(1, &blurVAO);
+    glBindVertexArray(blurVAO);
+
+    std::vector<float> position = {
+            -1.0, 1.0, 0.0,
+            1.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0,
+            1.0, -1.0, 0.0
+    };
+
+    std::vector<float> color = {
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0
+    };
+
+    std::vector<unsigned short> index ={
+           0, 1, 2,
+           3, 2, 1
+    };
+
+    VBO blurPosition(position.size() * sizeof(float), &position[0]);
+    blurPosition.SetAttrib(bAttLocation[0], bAttStride[0]);
+    VBO blurColor(color.size() * sizeof(float), &color[0]);
+    blurColor.SetAttrib(bAttLocation[1], bAttStride[1]);
+    GLuint blurIndex = Util::createIBO(index.size() * sizeof(unsigned short), &index[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, blurIndex);
 
     int count = 0;
 
@@ -142,6 +189,8 @@ int main() {
 
         double rad = (count % 360) * M_PI / 180;
 
+        glUseProgram(program);
+
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f),
                                                       static_cast<float>(fBuffer.frameWidth_) / fBuffer.frameHeight_,
                                                       0.1f,
@@ -173,26 +222,30 @@ int main() {
         glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, 1280, 960);
+        glViewport(0, 0, width * 2, height * 2);
         glClearColor(0.0f, 0.7f, 0.7f, 1.0f);
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        viewMatrix = glm::lookAt(camPosition, glm::vec3(0.0, 0.0, 0.0),
+        glUseProgram(blurProgram);
+        glBindVertexArray(blurVAO);
+
+        viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 0.5), glm::vec3(0.0, 0.0, 0.0),
                                  camUpDirection);
-        projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height,
-                                            0.1f,
-                                            100.0f);
+        projectionMatrix = glm::ortho(-1.0, 1.0, -1.0, 1.0, 0.1, 1.0);
 
         glBindTexture(GL_TEXTURE_2D, fBuffer.frameTexture_);
-        glGenerateMipmap(GL_TEXTURE_2D);
-        mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(1.0, 1.0, 0.0));
-        mvp = projectionMatrix * viewMatrix * mMatrix;
+        mvp = projectionMatrix * viewMatrix * modelMatrix;
         invMatrix = glm::inverse(mMatrix);
-        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &invMatrix[0][0]);
-        glUniform3fv(uniLocation[2], 1, &lightVec[0]);
-        glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
+        glUniformMatrix4fv(bUniLocation[0], 1, GL_FALSE, &mvp[0][0]);
+        glUniform1i(bUniLocation[1], 0);
+
+        if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            glUniform1i(bUniLocation[2], true);
+        } else {
+            glUniform1i(bUniLocation[2], false);
+        }
+        glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 
