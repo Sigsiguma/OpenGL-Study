@@ -3,6 +3,7 @@
 //
 
 #include "Texture.h"
+#include <opencv2/opencv.hpp>
 
 Texture::Texture(std::string imgPath) {
     img_ = cv::imread(imgPath, cv::IMREAD_UNCHANGED);

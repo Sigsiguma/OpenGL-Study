@@ -7,7 +7,6 @@
 
 #include <string>
 #include <opencv/cv.h>
-#include <highgui.h>
 #include <GL/glew.h>
 
 class Texture {

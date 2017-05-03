@@ -6,8 +6,15 @@ out vec4 fragment;
 uniform sampler2D textureData;
 in vec4 vColor;
 in vec2 vTexCoord;
+in vec3 vEyeDirection;
+in vec3 vLightDirection;
 
 void main() {
-    vec4 smpColor = texture(textureData, vTexCoord);
-    fragment = smpColor;
+    vec3 mNormal = (texture(textureData, vTexCoord) * 2.0 - 1.0).rgb;
+    vec3 light = normalize(vLightDirection);
+    vec3 eye = normalize(vEyeDirection);
+    vec3 halfLE = normalize(light + eye);
+    float diffuse = clamp(dot(mNormal, light), 0.1, 1.0);
+    float specular = pow(clamp(dot(mNormal, halfLE), 0.0, 1.0), 100.0);
+    fragment = vColor * vec4(vec3(diffuse), 1.0) + vec4(vec3(specular), 1.0);
 }
