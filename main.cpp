@@ -82,6 +82,9 @@ int main() {
     uniLocation.emplace_back(glGetUniformLocation(program, "lightPosition"));
     uniLocation.emplace_back(glGetUniformLocation(program, "eyePosition"));
     uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "textureData2"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "height"));
+
 
     GLuint cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
@@ -118,7 +121,9 @@ int main() {
     glm::mat4 mMatrix = modelMatrix;
 
     Texture texture0("texture.png");
+    Texture texture1("texture1.png");
     GLuint tex0 = texture0.GetTexture();
+    GLuint tex1 = texture1.GetTexture();
     glActiveTexture(GL_TEXTURE0);
 
     bool onclicked = false;
@@ -166,6 +171,11 @@ int main() {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, tex0);
         glUniform1i(uniLocation[5], 0);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, tex1);
+        glUniform1i(uniLocation[6], 1);
+        glUniform1f(uniLocation[7], 0.02f);
+
         glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
