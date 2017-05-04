@@ -14,7 +14,6 @@
 #include "FrameBuffer.h"
 #include "Utility.h"
 #include "Texture.h"
-#include "Sphere.h"
 #include "Torus.h"
 #include "Cube.h"
 #include "MouseDrag.h"
@@ -55,8 +54,8 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     glEnable(GL_BLEND);
+    glEnable(GL_CULL_FACE);
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
-
 
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
     const GLuint program = programCreator.GetProgramObject();
@@ -66,25 +65,20 @@ int main() {
     attLocation.emplace_back(glGetAttribLocation(program, "position"));
     attLocation.emplace_back(glGetAttribLocation(program, "color"));
     attLocation.emplace_back(glGetAttribLocation(program, "normal"));
-    attLocation.emplace_back(glGetAttribLocation(program, "texCoord"));
 
     std::vector<int> attStride;
     attStride.emplace_back(3);
     attStride.emplace_back(4);
     attStride.emplace_back(3);
-    attStride.emplace_back(2);
 
     //UniformのLocationを作成
     std::vector<int> uniLocation;
     uniLocation.emplace_back(glGetUniformLocation(program, "mvpMatrix"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "edge"));
     uniLocation.emplace_back(glGetUniformLocation(program, "invMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "mMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "lightPosition"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "eyePosition"));
+    uniLocation.emplace_back(glGetUniformLocation(program, "lightDirection"));
     uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "textureData2"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "height"));
-
+    uniLocation.emplace_back(glGetUniformLocation(program, "edgeColor"));
 
     GLuint cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
@@ -97,15 +91,27 @@ int main() {
     cubeColor.SetAttrib(attLocation[1], attStride[1]);
     VBO cubeNormal(cube.normal_.size() * sizeof(Vector3), &cube.normal_[0]);
     cubeNormal.SetAttrib(attLocation[2], attStride[2]);
-    VBO cubeTexCoord(cube.texCoord_.size() * sizeof(float), &cube.texCoord_[0]);
-    cubeTexCoord.SetAttrib(attLocation[3], attStride[3]);
     GLuint cubeIndex = Util::createIBO(cube.vertexIndex_.size() * sizeof(unsigned short), &cube.vertexIndex_[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndex);
+
+    GLuint torusVAO;
+    glGenVertexArrays(1, &torusVAO);
+    glBindVertexArray(torusVAO);
+
+    Torus torus(64, 64, 0.5, 2.5);
+    VBO torusPosition(torus.vertexPos_.size() * sizeof(Vector3), &torus.vertexPos_[0]);
+    torusPosition.SetAttrib(attLocation[0], attStride[0]);
+    VBO torusColor(torus.vertexColor_.size() * sizeof(Color), &torus.vertexColor_[0]);
+    torusColor.SetAttrib(attLocation[1], attStride[1]);
+    VBO torusNormal(torus.normal_.size() * sizeof(Vector3), &torus.normal_[0]);
+    torusNormal.SetAttrib(attLocation[2], attStride[2]);
+    GLuint torusIndex = Util::createIBO(torus.vertexIndex_.size() * sizeof(unsigned short), &torus.vertexIndex_[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, torusIndex);
 
     int count = 0;
 
     //MVP行列の作成
-    glm::vec3 camPosition(0.0, 0.0, 5.0);
+    glm::vec3 camPosition(0.0, 0.0, 10.0);
     glm::vec3 camUpDirection(0.0, 1.0, 0.0);
 
     glm::mat4 modelMatrix = glm::mat4(1.0f);
@@ -116,22 +122,22 @@ int main() {
 
     glm::quat quaternion(glm::vec3(0, 0, 0));
 
-    glm::vec3 lightPos(-10.0f, 10.0f, 10.0f);
+    glm::vec3 lightDirection(-0.5f, 0.5f, 0.5f);
 
     glm::mat4 mMatrix = modelMatrix;
 
-    Texture texture0("texture.png");
-    Texture texture1("texture1.png");
+    Texture texture0("toon.png");
     GLuint tex0 = texture0.GetTexture();
-    GLuint tex1 = texture1.GetTexture();
     glActiveTexture(GL_TEXTURE0);
 
     bool onclicked = false;
     double startX, startY;
 
+    glm::vec4 edgeColor(0.0f, 0.0f, 0.0f, 1.0f);
+
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.7f, 1.0f);
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ++count;
@@ -154,29 +160,32 @@ int main() {
             double currentX, currentY;
             glfwGetCursorPos(window, &currentX, &currentY);
             quaternion = mouseDrag.GetDragRotateMat(startX, startY, currentX, currentY, quaternion);
-            viewMatrix =  viewMatrix * glm::toMat4(quaternion);
+            viewMatrix = viewMatrix * glm::toMat4(quaternion);
         } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
             onclicked = false;
         }
 
-        glBindVertexArray(cubeVAO);
-        mMatrix = glm::rotate(modelMatrix, static_cast<float>(rad), glm::vec3(0.0f, 1.0, 0.0f));
+        glBindVertexArray(torusVAO);
         mvp = projectionMatrix * viewMatrix * mMatrix;
         glm::mat4 invMatrix = glm::inverse(mMatrix);
         glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &invMatrix[0][0]);
-        glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &mMatrix[0][0]);
-        glUniform3fv(uniLocation[3], 1, &lightPos[0]);
-        glUniform3fv(uniLocation[4], 1, &camPosition[0]);
+        glUniform1i(uniLocation[1], false);
+        glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &invMatrix[0][0]);
+        glUniform3fv(uniLocation[3], 1, &lightDirection[0]);
+
+        glCullFace(GL_BACK);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, tex0);
-        glUniform1i(uniLocation[5], 0);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, tex1);
-        glUniform1i(uniLocation[6], 1);
-        glUniform1f(uniLocation[7], 0.02f);
+        glUniform1i(uniLocation[4], 0);
+        edgeColor.a = 0.0f;
+        glUniform4fv(uniLocation[5], 1, &edgeColor[0]);
+        glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
-        glDrawElements(GL_TRIANGLES, cube.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
+        glCullFace(GL_FRONT);
+        edgeColor.a = 1.0f;
+        glUniform1i(uniLocation[1], true);
+        glUniform4fv(uniLocation[5], 1, &edgeColor[0]);
+        glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 

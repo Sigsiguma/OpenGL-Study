@@ -3,22 +3,20 @@ precision mediump float;
 
 out vec4 fragment;
 
+uniform mat4 invMatrix;
+uniform vec3 lightDirection;
 uniform sampler2D textureData;
-uniform sampler2D textureData2;
-uniform float height;
+uniform vec4 edgeColor;
 in vec4 vColor;
-in vec2 vTexCoord;
-in vec3 vEyeDirection;
-in vec3 vLightDirection;
+in vec3 vNormal;
 
 void main() {
-    vec3 light = normalize(vLightDirection);
-    vec3 eye = normalize(vEyeDirection);
-    float hScale = texture(textureData2, vTexCoord).r * height;
-    vec2 heightTexCoord = vTexCoord - eye.xy * hScale;
-    vec3 mNormal = (texture(textureData, heightTexCoord) * 2.0 - 1.0).rgb;
-    vec3 halfLE = normalize(light + eye);
-    float diffuse = clamp(dot(mNormal, light), 0.1, 1.0);
-    float specular = pow(clamp(dot(mNormal, halfLE), 0.0, 1.0), 100.0);
-    fragment = vColor * vec4(vec3(diffuse), 1.0) + vec4(vec3(specular), 1.0);
+    if(edgeColor.a > 0.0) {
+        fragment = edgeColor;
+    } else {
+        vec3 invLight = normalize(invMatrix * vec4(lightDirection, 0.0)).xyz;
+        float diffuse = clamp(dot(vNormal, invLight), 0.0, 1.0);
+        vec4 smpColor = texture(textureData, vec2(diffuse, 0.0));
+        fragment = vColor * smpColor;
+    }
 }
