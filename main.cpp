@@ -54,7 +54,6 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     glEnable(GL_BLEND);
-    glEnable(GL_CULL_FACE);
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
     const ProgramObjectCreator programCreator = ProgramObjectCreator("point.vert", "point.frag");
@@ -74,31 +73,15 @@ int main() {
     //UniformのLocationを作成
     std::vector<int> uniLocation;
     uniLocation.emplace_back(glGetUniformLocation(program, "mvpMatrix"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "edge"));
     uniLocation.emplace_back(glGetUniformLocation(program, "invMatrix"));
     uniLocation.emplace_back(glGetUniformLocation(program, "lightDirection"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "textureData"));
-    uniLocation.emplace_back(glGetUniformLocation(program, "edgeColor"));
-
-    GLuint cubeVAO;
-    glGenVertexArrays(1, &cubeVAO);
-    glBindVertexArray(cubeVAO);
-
-    Cube cube(2.0);
-    VBO cubePosition(cube.vertexPos_.size() * sizeof(Vector3), &cube.vertexPos_[0]);
-    cubePosition.SetAttrib(attLocation[0], attStride[0]);
-    VBO cubeColor(cube.vertexColor_.size() * sizeof(Color), &cube.vertexColor_[0]);
-    cubeColor.SetAttrib(attLocation[1], attStride[1]);
-    VBO cubeNormal(cube.normal_.size() * sizeof(Vector3), &cube.normal_[0]);
-    cubeNormal.SetAttrib(attLocation[2], attStride[2]);
-    GLuint cubeIndex = Util::createIBO(cube.vertexIndex_.size() * sizeof(unsigned short), &cube.vertexIndex_[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndex);
+    uniLocation.emplace_back(glGetUniformLocation(program, "eyeDirection"));
 
     GLuint torusVAO;
     glGenVertexArrays(1, &torusVAO);
     glBindVertexArray(torusVAO);
 
-    Torus torus(64, 64, 0.5, 2.5);
+    Torus torus(64, 64, 1.0, 2.0);
     VBO torusPosition(torus.vertexPos_.size() * sizeof(Vector3), &torus.vertexPos_[0]);
     torusPosition.SetAttrib(attLocation[0], attStride[0]);
     VBO torusColor(torus.vertexColor_.size() * sizeof(Color), &torus.vertexColor_[0]);
@@ -108,10 +91,58 @@ int main() {
     GLuint torusIndex = Util::createIBO(torus.vertexIndex_.size() * sizeof(unsigned short), &torus.vertexIndex_[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, torusIndex);
 
-    int count = 0;
+    const ProgramObjectCreator grayProgramObject = ProgramObjectCreator("gray.vert", "gray.frag");
+    const GLuint grayProgram = grayProgramObject.GetProgramObject();
+    glUseProgram(grayProgram);
+
+    std::vector<int> gAttLocation;
+    gAttLocation.emplace_back(glGetAttribLocation(grayProgram, "position"));
+    gAttLocation.emplace_back(glGetAttribLocation(grayProgram, "texCoord"));
+
+    std::vector<int> gAttStride;
+    gAttStride.emplace_back(3);
+    gAttStride.emplace_back(2);
+
+    std::vector<int> gUniLocation;
+    gUniLocation.emplace_back(glGetUniformLocation(grayProgram, "mvpMatrix"));
+    gUniLocation.emplace_back(glGetUniformLocation(grayProgram, "textureData"));
+    gUniLocation.emplace_back(glGetUniformLocation(grayProgram, "grayScale"));
+
+    std::vector<float> position = {
+            -1.0f, 1.0f, 0.0f,
+            1.0f, 1.0f, 0.0f,
+            -1.0f, -1.0f, 0.0f,
+            1.0f, -1.0f, 0.0f
+    };
+
+    std::vector<float> texCoord = {
+            0.0, 0.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            1.0, 1.0
+    };
+
+    std::vector<unsigned short> index = {
+            0, 2, 1,
+            2, 3, 1
+    };
+
+
+    GLuint boardVAO;
+    glGenVertexArrays(1, &boardVAO);
+    glBindVertexArray(boardVAO);
+
+    VBO boardPosition(position.size() * sizeof(float), &position[0]);
+    boardPosition.SetAttrib(gAttLocation[0], gAttStride[0]);
+    VBO boardTexCoord(texCoord.size() * sizeof(float), &texCoord[0]);
+    boardTexCoord.SetAttrib(gAttLocation[1], gAttStride[1]);
+    GLuint boardIndex = Util::createIBO(index.size() * sizeof(unsigned short), &index[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boardIndex);
+
+    int count = 0, count2 = 0;
 
     //MVP行列の作成
-    glm::vec3 camPosition(0.0, 0.0, 10.0);
+    glm::vec3 camPosition(0.0, 0.0, 30.0);
     glm::vec3 camUpDirection(0.0, 1.0, 0.0);
 
     glm::mat4 modelMatrix = glm::mat4(1.0f);
@@ -126,26 +157,31 @@ int main() {
 
     glm::mat4 mMatrix = modelMatrix;
 
-    Texture texture0("toon.png");
-    GLuint tex0 = texture0.GetTexture();
-    glActiveTexture(GL_TEXTURE0);
-
     bool onclicked = false;
     double startX, startY;
 
     glm::vec4 edgeColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    while (glfwWindowShouldClose(window) == GL_FALSE) {
+    FrameBuffer frameBuffer(width, height);
 
-        glClearColor(0.0f, 0.0f, 0.7f, 1.0f);
-        glClearDepth(1.0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        ++count;
+    while (glfwWindowShouldClose(window) == GL_FALSE) {
 
         Util::calcFPS(window, 1.0, "Test:");
 
+        ++count;
+        if (count % 2 == 0) { ++count2; }
+
         double rad = (count % 360) * M_PI / 180;
 
+        glUseProgram(program);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer.frameBuffer_);
+        glViewport(0, 0, width, height);
+
+        Color color = Util::hsva2rgb(count2 % 360, 1, 1, 1);
+        glClearColor(color.r, color.g, color.b, color.a);
+        glClearDepth(1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / height,
                                                       0.1f,
@@ -166,26 +202,40 @@ int main() {
         }
 
         glBindVertexArray(torusVAO);
-        mvp = projectionMatrix * viewMatrix * mMatrix;
-        glm::mat4 invMatrix = glm::inverse(mMatrix);
-        glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
-        glUniform1i(uniLocation[1], false);
-        glUniformMatrix4fv(uniLocation[2], 1, GL_FALSE, &invMatrix[0][0]);
-        glUniform3fv(uniLocation[3], 1, &lightDirection[0]);
 
-        glCullFace(GL_BACK);
+        for (int i = 0; i < 9; ++i) {
+            mMatrix = glm::rotate(modelMatrix, static_cast<float>(i * 2 * M_PI / 9.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            mMatrix = glm::translate(mMatrix, glm::vec3(0.0, 0.0, 10.0));
+            mMatrix = glm::rotate(mMatrix, static_cast<float>(rad), glm::vec3(1.0f, 1.0f, 0.0f));
+            mvp = projectionMatrix * viewMatrix * mMatrix;
+            glm::mat4 invMatrix = glm::inverse(mMatrix);
+            glUniformMatrix4fv(uniLocation[0], 1, GL_FALSE, &mvp[0][0]);
+            glUniformMatrix4fv(uniLocation[1], 1, GL_FALSE, &invMatrix[0][0]);
+            glUniform3fv(uniLocation[2], 1, &lightDirection[0]);
+            glUniform3fv(uniLocation[3], 1, &camPosition[0]);
+            glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
+        }
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, width * 2, height * 2);
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+        glClearDepth(1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glUseProgram(grayProgram);
+        glBindVertexArray(boardVAO);
+
+        viewMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 0.5), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+        projectionMatrix = glm::ortho(-1.0, 1.0, -1.0, 1.0, 0.1, 1.0);
+
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, tex0);
-        glUniform1i(uniLocation[4], 0);
-        edgeColor.a = 0.0f;
-        glUniform4fv(uniLocation[5], 1, &edgeColor[0]);
-        glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
+        glBindTexture(GL_TEXTURE_2D, frameBuffer.frameTexture_);
 
-        glCullFace(GL_FRONT);
-        edgeColor.a = 1.0f;
-        glUniform1i(uniLocation[1], true);
-        glUniform4fv(uniLocation[5], 1, &edgeColor[0]);
-        glDrawElements(GL_TRIANGLES, torus.vertexIndex_.size(), GL_UNSIGNED_SHORT, 0);
+        mvp = projectionMatrix * viewMatrix * modelMatrix;
+        glUniformMatrix4fv(gUniLocation[0], 1, GL_FALSE, &mvp[0][0]);
+        glUniform1i(gUniLocation[1], 0);
+        glUniform1i(gUniLocation[2], true);
+        glDrawElements(GL_TRIANGLES, index.size(), GL_UNSIGNED_SHORT, 0);
 
         glfwSwapBuffers(window);
 
