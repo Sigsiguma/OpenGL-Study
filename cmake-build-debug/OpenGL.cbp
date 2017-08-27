@@ -5,7 +5,7 @@
 		<Option title="OpenGL"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\usr\local\lib\cmake\glfw3\;CMake Files\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\usr\local\share\OpenCV\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\usr\local\lib\cmake\glfw3\;CMake Files\..\..\..\..\usr\local\opt\;CMake Files\..\..\..\..\usr\local\opt\opencv3\;CMake Files\..\..\..\..\usr\local\opt\opencv3\share\;CMake Files\..\..\..\..\usr\local\opt\opencv3\share\OpenCV\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/siguma/CLionProjects/OpenGL-Study/cmake-build-debug"/>
@@ -45,11 +45,11 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/local/include/opencv"/>
+					<Add directory="/usr/local/Cellar/opencv/3.3.0_1/include"/>
+					<Add directory="/usr/local/Cellar/opencv/3.3.0_1/include/opencv"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.1.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
@@ -68,11 +68,11 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/local/include/opencv"/>
+					<Add directory="/usr/local/Cellar/opencv/3.3.0_1/include"/>
+					<Add directory="/usr/local/Cellar/opencv/3.3.0_1/include/opencv"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.1.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
@@ -156,17 +156,17 @@
 		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/lib/cmake/glfw3/glfw3Targets-release.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\glfw3\"/>
 		</Unit>
-		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/share/OpenCV/OpenCVConfig-version.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\OpenCV\"/>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/opt/opencv3/share/OpenCV/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\opt\opencv3\share\OpenCV\"/>
 		</Unit>
-		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/share/OpenCV/OpenCVConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\OpenCV\"/>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/opt/opencv3/share/OpenCV/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\opt\opencv3\share\OpenCV\"/>
 		</Unit>
-		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/share/OpenCV/OpenCVModules.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\OpenCV\"/>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/opt/opencv3/share/OpenCV/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\opt\opencv3\share\OpenCV\"/>
 		</Unit>
-		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/share/OpenCV/OpenCVModules-release.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\OpenCV\"/>
+		<Unit filename="/Users/siguma/CLionProjects/OpenGL-Study/../../../../usr/local/opt/opencv3/share/OpenCV/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\opt\opencv3\share\OpenCV\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

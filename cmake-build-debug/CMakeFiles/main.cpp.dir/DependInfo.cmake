@@ -20,7 +20,8 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include"
-  "/usr/local/include/opencv"
+  "/usr/local/Cellar/opencv/3.3.0_1/include"
+  "/usr/local/Cellar/opencv/3.3.0_1/include/opencv"
   )
 
 # Targets to which this target links.
